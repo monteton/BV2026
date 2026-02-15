@@ -393,12 +393,12 @@
                 }
             }, 3000);
 
-            // === Определить название текущего браузера для сообщений ===
+            // === Название текущего браузера ===
             function getBrowserName() {
                 if (isTelegram) return 'Telegram';
                 if (isInstagram) return 'Instagram';
                 if (isFacebook) return 'Facebook';
-                if (isVK) return 'VK';
+                if (isVK) return 'ВКонтакте';
                 if (isOpera) return 'Opera';
                 if (isFirefox) return 'Firefox';
                 if (isSamsung) return 'Samsung Internet';
@@ -408,9 +408,40 @@
                 return 'этот браузер';
             }
 
-            // === Рекомендуемый браузер ===
-            function getTargetBrowser() {
-                return isIOS ? 'Safari' : 'Chrome';
+            // === Открыть в Chrome через Android Intent ===
+            function openInChrome() {
+                const currentUrl = window.location.href;
+                const url = new URL(currentUrl);
+                const intentUrl = 'intent://' + url.host + url.pathname + url.search + url.hash +
+                    '#Intent;scheme=https;package=com.android.chrome;end';
+                window.location.href = intentUrl;
+            }
+
+            // === Открыть в Safari через URL scheme (iOS) ===
+            function openInSafari() {
+                const currentUrl = window.location.href;
+                const safariUrl = currentUrl
+                    .replace(/^https:\/\//, 'x-safari-https://')
+                    .replace(/^http:\/\//, 'x-safari-http://');
+                window.location.href = safariUrl;
+            }
+
+            // === Скопировать ссылку (фоллбэк для десктопа) ===
+            function copyLink(button) {
+                navigator.clipboard.writeText(window.location.href).then(() => {
+                    button.textContent = '✓ Ссылка скопирована!';
+                    setTimeout(() => { button.textContent = button.dataset.originalText || 'Скопировать ссылку'; }, 2500);
+                }).catch(() => {
+                    const ta = document.createElement('textarea');
+                    ta.value = window.location.href;
+                    ta.style.cssText = 'position:fixed;opacity:0';
+                    document.body.appendChild(ta);
+                    ta.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(ta);
+                    button.textContent = '✓ Ссылка скопирована!';
+                    setTimeout(() => { button.textContent = button.dataset.originalText || 'Скопировать ссылку'; }, 2500);
+                });
             }
 
             // === Показать баннер ===
@@ -448,78 +479,67 @@
                         'затем <b>«На экран «Домой»»</b>';
 
                 } else if (mode === 'ios-other') {
-                    // 📱 iOS но не Safari → откройте Safari
+                    // 📱 iOS, не Safari → перенаправить в Safari
                     const browserName = getBrowserName();
                     titleEl.textContent = 'Откройте в Safari';
                     subtitleEl.textContent = browserName + ' не поддерживает установку';
-                    btn.textContent = 'Скопировать ссылку';
+                    btn.textContent = 'Открыть в Safari';
                     btn.style.display = 'inline-block';
-                    stepsEl.innerHTML = '1. Скопируйте ссылку<br>' +
-                        '2. Откройте <b>Safari</b><br>' +
-                        '3. Вставьте ссылку и нажмите <b>Поделиться → На экран «Домой»</b>';
+                    stepsEl.innerHTML = 'В Safari нажмите <b>Поделиться</b> → <b>«На экран Домой»</b>';
                     btn.onclick = () => {
-                        navigator.clipboard.writeText(window.location.href).then(() => {
-                            btn.textContent = '✓ Скопировано!';
-                            setTimeout(() => btn.textContent = 'Скопировать ссылку', 2500);
-                        });
+                        navigator.clipboard.writeText(window.location.href).catch(() => { });
+                        openInSafari();
                     };
 
                 } else if (mode === 'android-other') {
-                    // 🤖 Android но не Chrome → откройте Chrome
+                    // 🤖 Android, не Chrome → перенаправить в Chrome
                     const browserName = getBrowserName();
                     titleEl.textContent = 'Откройте в Chrome';
                     subtitleEl.textContent = browserName + ' не поддерживает установку';
-                    btn.textContent = 'Скопировать ссылку';
+                    btn.textContent = 'Открыть в Chrome';
                     btn.style.display = 'inline-block';
-                    stepsEl.innerHTML = '1. Скопируйте ссылку<br>' +
-                        '2. Откройте <b>Google Chrome</b><br>' +
-                        '3. Вставьте ссылку — появится кнопка <b>«Установить»</b>';
-                    btn.onclick = () => {
-                        navigator.clipboard.writeText(window.location.href).then(() => {
-                            btn.textContent = '✓ Скопировано!';
-                            setTimeout(() => btn.textContent = 'Скопировать ссылку', 2500);
-                        });
-                    };
+                    stepsEl.innerHTML = 'В Chrome появится кнопка <b>«Установить»</b>';
+                    btn.onclick = () => { openInChrome(); };
 
                 } else if (mode === 'webview') {
                     // 💬 Telegram / Instagram / VK / Facebook
                     const browserName = getBrowserName();
-                    const targetBrowser = getTargetBrowser();
-                    titleEl.textContent = 'Откройте в ' + targetBrowser;
-                    subtitleEl.textContent = 'Установка из ' + browserName + ' невозможна';
-                    btn.textContent = 'Скопировать ссылку';
-                    btn.style.display = 'inline-block';
-
-                    if (isIOS) {
-                        stepsEl.innerHTML = '1. Скопируйте ссылку<br>' +
-                            '2. Откройте <b>Safari</b><br>' +
-                            '3. Нажмите <b>Поделиться → На экран «Домой»</b>';
+                    if (isAndroid) {
+                        titleEl.textContent = 'Откройте в Chrome';
+                        subtitleEl.textContent = 'Установка из ' + browserName + ' невозможна';
+                        btn.textContent = 'Открыть в Chrome';
+                        btn.style.display = 'inline-block';
+                        stepsEl.innerHTML = 'В Chrome появится кнопка <b>«Установить»</b>';
+                        btn.onclick = () => { openInChrome(); };
+                    } else if (isIOS) {
+                        titleEl.textContent = 'Откройте в Safari';
+                        subtitleEl.textContent = 'Установка из ' + browserName + ' невозможна';
+                        btn.textContent = 'Открыть в Safari';
+                        btn.style.display = 'inline-block';
+                        stepsEl.innerHTML = 'В Safari нажмите <b>Поделиться</b> → <b>«На экран Домой»</b>';
+                        btn.onclick = () => {
+                            navigator.clipboard.writeText(window.location.href).catch(() => { });
+                            openInSafari();
+                        };
                     } else {
-                        stepsEl.innerHTML = '1. Скопируйте ссылку<br>' +
-                            '2. Откройте <b>Chrome</b><br>' +
-                            '3. Вставьте ссылку — появится кнопка <b>«Установить»</b>';
+                        titleEl.textContent = 'Откройте в Chrome';
+                        subtitleEl.textContent = 'Для установки приложения';
+                        btn.textContent = 'Скопировать ссылку';
+                        btn.dataset.originalText = 'Скопировать ссылку';
+                        btn.style.display = 'inline-block';
+                        stepsEl.innerHTML = 'Откройте <b>Google Chrome</b> и вставьте ссылку';
+                        btn.onclick = () => { copyLink(btn); };
                     }
-
-                    btn.onclick = () => {
-                        navigator.clipboard.writeText(window.location.href).then(() => {
-                            btn.textContent = '✓ Скопировано!';
-                            setTimeout(() => btn.textContent = 'Скопировать ссылку', 2500);
-                        });
-                    };
 
                 } else if (mode === 'desktop-other') {
                     // 🖥️ Десктоп (Firefox, Edge, Opera и т.д.)
                     titleEl.textContent = 'Откройте в Chrome';
                     subtitleEl.textContent = 'Для установки приложения';
                     btn.textContent = 'Скопировать ссылку';
+                    btn.dataset.originalText = 'Скопировать ссылку';
                     btn.style.display = 'inline-block';
                     stepsEl.innerHTML = 'Откройте <b>Google Chrome</b> и вставьте ссылку.<br>Появится кнопка <b>«Установить»</b> в адресной строке.';
-                    btn.onclick = () => {
-                        navigator.clipboard.writeText(window.location.href).then(() => {
-                            btn.textContent = '✓ Скопировано!';
-                            setTimeout(() => btn.textContent = 'Скопировать ссылку', 2500);
-                        });
-                    };
+                    btn.onclick = () => { copyLink(btn); };
                 }
             }
 
