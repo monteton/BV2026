@@ -39,9 +39,7 @@
             height: 56px;
             padding: 0 16px;
             padding-top: env(safe-area-inset-top);
-            background: rgba(26, 26, 26, 0.95);
-            -webkit-backdrop-filter: blur(12px);
-            backdrop-filter: blur(12px);
+            background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
 
@@ -73,9 +71,13 @@
             color: rgba(255, 255, 255, 0.7);
             font-size: 14px;
             font-weight: 500;
+            max-width: 180px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
-        /* ===== PDF CONTAINER ===== */
+        /* ===== PDF FRAME (iOS / Desktop) ===== */
         .pdf-frame {
             position: fixed;
             top: calc(56px + env(safe-area-inset-top));
@@ -84,6 +86,85 @@
             bottom: 0;
             border: none;
             background: #f5f5f5;
+            width: 100%;
+            height: calc(100% - 56px - env(safe-area-inset-top));
+        }
+
+        /* ===== ANDROID OPEN PAGE ===== */
+        .android-page {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: fixed;
+            top: calc(56px + env(safe-area-inset-top));
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 32px;
+            text-align: center;
+            background: linear-gradient(180deg, #1a1a1a 0%, #111 100%);
+        }
+
+        .android-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(92, 189, 13, 0.1);
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+        }
+
+        .android-icon i {
+            font-size: 36px;
+            color: #5cbd0d;
+        }
+
+        .android-title {
+            color: #fff;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .android-subtitle {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+            margin-bottom: 32px;
+            line-height: 1.5;
+        }
+
+        .android-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 36px;
+            background: #5cbd0d;
+            color: #fff;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.15s, box-shadow 0.2s;
+            box-shadow: 0 4px 20px rgba(92, 189, 13, 0.3);
+        }
+
+        .android-btn:active {
+            transform: scale(0.96);
+        }
+
+        .android-btn i {
+            font-size: 18px;
+        }
+
+        .android-hint {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 12px;
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -96,7 +177,7 @@
             <span>Назад</span>
         </a>
         <span class="header-title" id="headerTitle"></span>
-        <a class="header-btn" id="openBtn" href="#" target="_blank" title="Открыть отдельно">
+        <a class="header-btn" id="openBtn" href="#" target="_blank" title="Открыть отдельно" style="display:none">
             <i class="fa-solid fa-arrow-up-right-from-square"></i>
         </a>
     </div>
@@ -117,16 +198,38 @@
         }
 
         if (file) {
-            // Кнопка «открыть отдельно»
-            document.getElementById('openBtn').href = file;
+            const ua = navigator.userAgent || '';
+            const isAndroid = /Android/i.test(ua);
 
-            // Простой iframe — браузер сам отобразит PDF
-            const iframe = document.createElement('iframe');
-            iframe.className = 'pdf-frame';
-            iframe.setAttribute('allowfullscreen', '');
-            iframe.src = file;
+            if (isAndroid) {
+                // Android: красивая страница с кнопкой «Открыть»
+                const page = document.createElement('div');
+                page.className = 'android-page';
+                page.innerHTML = `
+                    <div class="android-icon">
+                        <i class="fa-solid fa-file-pdf"></i>
+                    </div>
+                    <div class="android-title">${title || 'Документ PDF'}</div>
+                    <div class="android-subtitle">Нажмите для просмотра<br>с зумом и листанием</div>
+                    <a class="android-btn" href="${file}" target="_blank">
+                        <i class="fa-solid fa-eye"></i>
+                        Открыть PDF
+                    </a>
+                    <div class="android-hint">Откроется во встроенном просмотрщике</div>
+                `;
+                document.body.appendChild(page);
+            } else {
+                // iOS / Desktop: iframe с нативным просмотром
+                const openBtn = document.getElementById('openBtn');
+                openBtn.href = file;
+                openBtn.style.display = 'flex';
 
-            document.body.appendChild(iframe);
+                const iframe = document.createElement('iframe');
+                iframe.className = 'pdf-frame';
+                iframe.setAttribute('allowfullscreen', '');
+                iframe.src = file;
+                document.body.appendChild(iframe);
+            }
         } else {
             document.getElementById('headerTitle').textContent = 'Файл не найден';
         }
