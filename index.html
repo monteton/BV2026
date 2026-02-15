@@ -364,27 +364,26 @@
                 showBanner('native');
             });
 
-            // === Таймер: если beforeinstallprompt не пришёл ===
-            setTimeout(() => {
-                if (bannerShown) return;
+            // === Для iOS и WebView — показываем баннер СРАЗУ ===
+            if (isWebView) {
+                showBanner('webview');
+            } else if (isIOS && isSafari) {
+                showBanner('ios-safari');
+            } else if (isIOS && !isSafari) {
+                showBanner('ios-other');
+            }
 
-                if (isWebView) {
-                    // Telegram / Instagram / VK / Facebook → копировать ссылку
-                    showBanner('webview');
-                } else if (isIOS && isSafari) {
-                    // iOS Safari → инструкция "На экран Домой"
-                    showBanner('ios-safari');
-                } else if (isIOS && !isSafari) {
-                    // iOS но НЕ Safari (Chrome iOS, Firefox iOS, Opera iOS) → откройте Safari
-                    showBanner('ios-other');
-                } else if (isAndroid && !deferredPrompt) {
-                    // Android но НЕ Chrome (Opera, Firefox, Samsung, Yandex, UC)
-                    showBanner('android-other');
-                } else if (!isAndroid && !isIOS && !deferredPrompt) {
-                    // Desktop без поддержки install prompt
-                    showBanner('desktop-other');
-                }
-            }, 3000);
+            // === Для Chrome/Android/Desktop — ждём 500мс на beforeinstallprompt ===
+            if (!bannerShown) {
+                setTimeout(() => {
+                    if (bannerShown) return;
+                    if (isAndroid && !deferredPrompt) {
+                        showBanner('android-other');
+                    } else if (!isAndroid && !isIOS && !deferredPrompt) {
+                        showBanner('desktop-other');
+                    }
+                }, 500);
+            }
 
             // === Название текущего браузера ===
             function getBrowserName() {
