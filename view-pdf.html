@@ -36,17 +36,13 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 12px 16px;
-            padding-top: calc(12px + env(safe-area-inset-top));
-            background: rgba(26, 26, 26, 0.92);
+            height: 56px;
+            padding: 0 16px;
+            padding-top: env(safe-area-inset-top);
+            background: rgba(26, 26, 26, 0.95);
             -webkit-backdrop-filter: blur(12px);
             backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            transition: transform 0.3s ease;
-        }
-
-        .pdf-header.hidden {
-            transform: translateY(-100%);
         }
 
         .header-btn {
@@ -73,408 +69,79 @@
             font-size: 18px;
         }
 
-        .page-indicator {
+        .header-title {
             color: rgba(255, 255, 255, 0.7);
             font-size: 14px;
             font-weight: 500;
         }
 
-        /* ===== PDF SCROLL CONTAINER ===== */
-        .pdf-viewport {
+        /* ===== PDF CONTAINER ===== */
+        .pdf-frame {
             position: fixed;
-            top: 0;
+            top: calc(56px + env(safe-area-inset-top));
             left: 0;
             right: 0;
             bottom: 0;
-            overflow: auto;
-            -webkit-overflow-scrolling: touch;
-            overscroll-behavior: contain;
-            touch-action: pan-x pan-y;
-        }
-
-        /* При зуме разрешаем горизонтальный скролл */
-        .pdf-viewport.zoomed {
-            touch-action: auto;
-        }
-
-        .pdf-pages {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            padding: 70px 0 40px 0;
-            padding-top: calc(70px + env(safe-area-inset-top));
-            padding-bottom: calc(40px + env(safe-area-inset-bottom));
-            min-height: 100%;
-            transform-origin: center top;
-            transition: none;
-        }
-
-        .pdf-pages canvas {
-            display: block;
-            max-width: 100%;
-            height: auto;
-            background: #fff;
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.4);
-        }
-
-        /* ===== LOADING ===== */
-        .loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background: #1a1a1a;
-            z-index: 200;
-            transition: opacity 0.4s ease;
-        }
-
-        .loading-overlay.fade-out {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .loading-spinner {
-            width: 40px;
-            height: 40px;
-            border: 3px solid rgba(255, 255, 255, 0.15);
-            border-top-color: #fff;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        .loading-text {
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 14px;
-            margin-top: 16px;
-        }
-
-        .loading-error {
-            color: #ff6b6b;
-            font-size: 14px;
-            margin-top: 16px;
-            text-align: center;
-            padding: 0 32px;
-        }
-
-        /* ===== PROGRESS BAR ===== */
-        .progress-bar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 3px;
-            background: linear-gradient(90deg, #667eea, #764ba2);
-            z-index: 300;
-            transition: width 0.3s ease;
-            border-radius: 0 2px 2px 0;
-        }
-
-        /* ===== ZOOM INDICATOR ===== */
-        .zoom-indicator {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(0, 0, 0, 0.7);
-            color: #fff;
-            font-size: 18px;
-            font-weight: 600;
-            padding: 10px 20px;
-            border-radius: 12px;
-            z-index: 150;
-            opacity: 0;
-            transition: opacity 0.2s ease;
-            pointer-events: none;
-        }
-
-        .zoom-indicator.show {
-            opacity: 1;
+            border: none;
+            background: #f5f5f5;
         }
     </style>
 </head>
 
 <body>
-    <!-- Progress bar -->
-    <div class="progress-bar" id="progressBar" style="width: 0%"></div>
-
-    <!-- Loading overlay -->
-    <div class="loading-overlay" id="loadingOverlay">
-        <div class="loading-spinner"></div>
-        <div class="loading-text" id="loadingText">Загрузка документа...</div>
-    </div>
-
-    <!-- Zoom indicator -->
-    <div class="zoom-indicator" id="zoomIndicator">100%</div>
-
     <!-- Header -->
-    <div class="pdf-header" id="pdfHeader">
+    <div class="pdf-header">
         <a class="header-btn" id="backBtn" href="javascript:history.back()">
             <i class="fa-solid fa-chevron-left"></i>
             <span>Назад</span>
         </a>
-        <span class="page-indicator" id="pageIndicator"></span>
+        <span class="header-title" id="headerTitle"></span>
+        <a class="header-btn" id="openBtn" href="#" target="_blank" title="Открыть отдельно">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+        </a>
     </div>
 
-    <!-- PDF pages container -->
-    <div class="pdf-viewport" id="pdfViewport">
-        <div class="pdf-pages" id="pdfPages"></div>
-    </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <script>
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+        const params = new URLSearchParams(window.location.search);
+        const file = params.get('file');
+        const backUrl = params.get('back');
+        const title = params.get('title');
 
-        const RENDER_SCALE = 2; // Хорошее качество, умеренная нагрузка
+        // Назад
+        if (backUrl) document.getElementById('backBtn').href = backUrl;
 
-        // DOM
-        const pdfViewport = document.getElementById('pdfViewport');
-        const pdfPages = document.getElementById('pdfPages');
-        const loadingOverlay = document.getElementById('loadingOverlay');
-        const loadingText = document.getElementById('loadingText');
-        const progressBar = document.getElementById('progressBar');
-        const pageIndicator = document.getElementById('pageIndicator');
-        const pdfHeader = document.getElementById('pdfHeader');
-        const backBtn = document.getElementById('backBtn');
-        const zoomIndicator = document.getElementById('zoomIndicator');
-
-        let canvasElements = [];
-        let totalPages = 0;
-        let headerVisible = true;
-        let lastScrollY = 0;
-
-        // ===== PINCH-TO-ZOOM =====
-        let currentScale = 1;
-        let startDistance = 0;
-        let startScale = 1;
-        let zoomTimeout = null;
-
-        function getDistance(t1, t2) {
-            const dx = t1.clientX - t2.clientX;
-            const dy = t1.clientY - t2.clientY;
-            return Math.sqrt(dx * dx + dy * dy);
+        // Заголовок
+        if (title) {
+            document.title = title;
+            document.getElementById('headerTitle').textContent = title;
         }
 
-        pdfViewport.addEventListener('touchstart', (e) => {
-            if (e.touches.length === 2) {
-                e.preventDefault();
-                startDistance = getDistance(e.touches[0], e.touches[1]);
-                startScale = currentScale;
+        if (file) {
+            // Кнопка «открыть отдельно»
+            document.getElementById('openBtn').href = file;
+
+            // Определяем платформу
+            const ua = navigator.userAgent || '';
+            const isAndroid = /Android/i.test(ua);
+
+            // Создаём iframe
+            const iframe = document.createElement('iframe');
+            iframe.className = 'pdf-frame';
+            iframe.setAttribute('allowfullscreen', '');
+
+            if (isAndroid) {
+                // Android: Google Docs Viewer (встроенный зум, скролл)
+                const fullUrl = new URL(file, window.location.href).href;
+                iframe.src = 'https://docs.google.com/gview?embedded=true&url=' + encodeURIComponent(fullUrl);
+            } else {
+                // iOS / Desktop: нативный просмотрщик браузера
+                iframe.src = file;
             }
-        }, { passive: false });
 
-        pdfViewport.addEventListener('touchmove', (e) => {
-            if (e.touches.length === 2) {
-                e.preventDefault();
-                const dist = getDistance(e.touches[0], e.touches[1]);
-                const ratio = dist / startDistance;
-                currentScale = Math.min(4, Math.max(1, startScale * ratio));
-
-                pdfPages.style.transform = currentScale > 1 ? `scale(${currentScale})` : '';
-                pdfPages.style.width = currentScale > 1 ? `${100 / currentScale}%` : '';
-
-                // Показать индикатор зума
-                zoomIndicator.textContent = Math.round(currentScale * 100) + '%';
-                zoomIndicator.classList.add('show');
-                clearTimeout(zoomTimeout);
-
-                // Управление классами для скролла
-                if (currentScale > 1.05) {
-                    pdfViewport.classList.add('zoomed');
-                } else {
-                    pdfViewport.classList.remove('zoomed');
-                }
-            }
-        }, { passive: false });
-
-        pdfViewport.addEventListener('touchend', (e) => {
-            if (e.touches.length < 2) {
-                // Если масштаб примерно 1 — сбросить на ровно 1
-                if (currentScale < 1.05) {
-                    currentScale = 1;
-                    pdfPages.style.transform = '';
-                    pdfPages.style.width = '';
-                    pdfViewport.classList.remove('zoomed');
-                }
-
-                // Скрыть индикатор зума
-                zoomTimeout = setTimeout(() => {
-                    zoomIndicator.classList.remove('show');
-                }, 800);
-            }
-        });
-
-        // Двойной тап для сброса зума
-        let lastTapTime = 0;
-        pdfViewport.addEventListener('touchend', (e) => {
-            if (e.touches.length === 0 && e.changedTouches.length === 1) {
-                const now = Date.now();
-                if (now - lastTapTime < 300) {
-                    // Двойной тап
-                    if (currentScale > 1.05) {
-                        // Сбросить зум
-                        currentScale = 1;
-                        pdfPages.style.transform = '';
-                        pdfPages.style.width = '';
-                        pdfViewport.classList.remove('zoomed');
-                        zoomIndicator.textContent = '100%';
-                        zoomIndicator.classList.add('show');
-                        clearTimeout(zoomTimeout);
-                        zoomTimeout = setTimeout(() => zoomIndicator.classList.remove('show'), 800);
-                    } else {
-                        // Увеличить до 2x
-                        currentScale = 2;
-                        pdfPages.style.transform = `scale(${currentScale})`;
-                        pdfPages.style.width = `${100 / currentScale}%`;
-                        pdfViewport.classList.add('zoomed');
-                        zoomIndicator.textContent = '200%';
-                        zoomIndicator.classList.add('show');
-                        clearTimeout(zoomTimeout);
-                        zoomTimeout = setTimeout(() => zoomIndicator.classList.remove('show'), 800);
-                    }
-                }
-                lastTapTime = now;
-            }
-        });
-
-        // ===== PDF LOADING =====
-        function getPdfUrl() {
-            const params = new URLSearchParams(window.location.search);
-            const file = params.get('file');
-            if (file) return file;
-            if (window.location.hash) return decodeURIComponent(window.location.hash.substring(1));
-            return null;
+            document.body.appendChild(iframe);
+        } else {
+            document.getElementById('headerTitle').textContent = 'Файл не найден';
         }
-
-        async function init() {
-            const pdfUrl = getPdfUrl();
-            if (!pdfUrl) {
-                showError('Файл не указан');
-                return;
-            }
-
-            // Back button
-            const params = new URLSearchParams(window.location.search);
-            const backUrl = params.get('back');
-            if (backUrl) backBtn.href = backUrl;
-
-            // Title
-            const title = params.get('title');
-            if (title) document.title = title;
-
-            try {
-                const loadingTask = pdfjsLib.getDocument(pdfUrl);
-
-                loadingTask.onProgress = function (progress) {
-                    if (progress.total > 0) {
-                        const pct = Math.round((progress.loaded / progress.total) * 100);
-                        progressBar.style.width = pct + '%';
-                        loadingText.textContent = `Загрузка... ${pct}%`;
-                    }
-                };
-
-                const pdfDoc = await loadingTask.promise;
-                totalPages = pdfDoc.numPages;
-                progressBar.style.width = '100%';
-                loadingText.textContent = 'Рендеринг...';
-
-                // Рендерим все страницы
-                for (let i = 1; i <= totalPages; i++) {
-                    const page = await pdfDoc.getPage(i);
-                    const viewport = page.getViewport({ scale: RENDER_SCALE });
-
-                    const canvas = document.createElement('canvas');
-                    const ctx = canvas.getContext('2d');
-                    canvas.width = viewport.width;
-                    canvas.height = viewport.height;
-                    canvas.style.width = '100%';
-                    canvas.style.height = 'auto';
-
-                    pdfPages.appendChild(canvas);
-                    canvasElements.push(canvas);
-
-                    await page.render({ canvasContext: ctx, viewport }).promise;
-
-                    loadingText.textContent = `${i} из ${totalPages}`;
-                    progressBar.style.width = Math.round((i / totalPages) * 100) + '%';
-                }
-
-                // Done
-                loadingOverlay.classList.add('fade-out');
-                setTimeout(() => {
-                    loadingOverlay.style.display = 'none';
-                    progressBar.style.display = 'none';
-                }, 400);
-                updatePageIndicator();
-
-            } catch (err) {
-                console.error(err);
-                showError('Ошибка загрузки PDF');
-            }
-        }
-
-        function showError(msg) {
-            loadingText.style.display = 'none';
-            const s = loadingOverlay.querySelector('.loading-spinner');
-            if (s) s.style.display = 'none';
-            const el = document.createElement('div');
-            el.className = 'loading-error';
-            el.textContent = msg;
-            loadingOverlay.appendChild(el);
-        }
-
-        // ===== PAGE INDICATOR =====
-        function updatePageIndicator() {
-            if (!canvasElements.length) return;
-            const rect = pdfViewport.getBoundingClientRect();
-            const center = rect.top + rect.height / 2;
-            let cur = 1;
-            for (let i = 0; i < canvasElements.length; i++) {
-                const r = canvasElements[i].getBoundingClientRect();
-                if (r.top <= center && r.bottom >= center) { cur = i + 1; break; }
-                if (r.top > center) { cur = Math.max(1, i); break; }
-                cur = i + 1;
-            }
-            pageIndicator.textContent = `${cur} / ${totalPages}`;
-        }
-
-        // ===== SCROLL =====
-        pdfViewport.addEventListener('scroll', () => {
-            updatePageIndicator();
-            const y = pdfViewport.scrollTop;
-            if (y > lastScrollY && y > 100 && headerVisible) {
-                pdfHeader.classList.add('hidden');
-                headerVisible = false;
-            } else if (y < lastScrollY && !headerVisible) {
-                pdfHeader.classList.remove('hidden');
-                headerVisible = true;
-            }
-            lastScrollY = y;
-        }, { passive: true });
-
-        // Tap to toggle header
-        pdfViewport.addEventListener('click', (e) => {
-            if (e.target.tagName === 'CANVAS') {
-                headerVisible = !headerVisible;
-                pdfHeader.classList.toggle('hidden', !headerVisible);
-            }
-        });
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') history.back();
-        });
-
-        init();
     </script>
 </body>
 
