@@ -350,16 +350,9 @@
             // Браузер поддерживает установку? (только Chrome на Android/Desktop и Safari на iOS)
             const isSupportedBrowser = (isChrome && !isIOS) || (isSafari && isIOS);
 
-            // === Проверка: закрывал ли пользователь баннер? ===
-            const dismissData = JSON.parse(localStorage.getItem('pwa-banner-state') || '{}');
-
-            // Для нативной установки (Chrome) — напоминаем через 3 дня
-            // Для ручной инструкции (Safari/другие) — напоминаем через 1 день 
-            // Для WebView/неподдерживаемых — напоминаем через 1 день
-            if (dismissData.dismissed) {
-                const cooldown = dismissData.wasNative ? 259200000 : 86400000; // 3 дня или 1 день
-                if (Date.now() - dismissData.dismissed < cooldown) return;
-            }
+            // === Если приложение уже установлено — не показываем ===
+            const pwaState = JSON.parse(localStorage.getItem('pwa-banner-state') || '{}');
+            if (pwaState.installed) return;
 
             let deferredPrompt = null;
             let bannerShown = false;
@@ -543,13 +536,9 @@
                 }
             }
 
-            // === Закрытие баннера ===
+            // === Закрытие баннера (скрываем, но покажем снова при следующем визите) ===
             closeBtn.addEventListener('click', () => {
                 banner.classList.remove('show');
-                localStorage.setItem('pwa-banner-state', JSON.stringify({
-                    dismissed: Date.now(),
-                    wasNative: !!deferredPrompt
-                }));
             });
         })();
     </script>
