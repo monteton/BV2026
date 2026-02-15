@@ -1,6 +1,6 @@
 {
     "name": "Лучшая версия себя",
-    "short_name": "BestVersion",
+    "short_name": "Марафон",
     "description": "Ваш путь к здоровью и силе — тренировки, питание, мотивация",
     "start_url": "./index.html",
     "id": "/bestversion",
