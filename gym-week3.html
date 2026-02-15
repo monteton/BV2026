@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    
+    <title>Зал — Неделя 3</title>
+    <!-- ИЗМЕНЕНИЕ: Подключена библиотека иконок для нового меню -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* ИЗМЕНЕНИЕ: Общие стили для "мобильной рамки" и фона */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #dcdcdc; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .mobile-frame {
+            width: 100%;
+            max-width: 430px;
+            height: 100vh;
+            background-color: #F9F4F2;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        header {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            padding-bottom: 10px;
+            flex-shrink: 0;
+        }
+
+        .back-button {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 22px;
+            color: #333;
+            text-decoration: none;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin: 0;
+            text-align: center; /* Центрируем заголовок */
+        }
+
+        main {
+            padding: 10px 16px;
+            padding-bottom: 20px; /* Отступ снизу */
+            flex-grow: 1;
+            overflow-y: auto;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        main::-webkit-scrollbar {
+            display: none;
+        }
+        /* КОНЕЦ ИЗМЕНЕНИЙ для "мобильной рамки" */
+
+        .days-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px; /* ИЗМЕНЕНИЕ: Изменено на 15px для соответствия дизайну */
+            width: 100%;
+            margin: 0 auto 24px auto;
+        }
+        .day-btn {
+            background: #fff;
+            border-radius: 18px; /* ИЗМЕНЕНИЕ: Изменено на 18px для соответствия дизайну */
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05); /* ИЗМЕНЕНИЕ: Изменено для соответствия дизайну */
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: #222;
+            font-size: 1.1em;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+        }
+        .day-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(44,62,80,0.13);
+        }
+        .square-image {
+            width: 100%;
+            max-width: 300px;
+            aspect-ratio: 1 / 1;
+            margin: 24px auto;
+            border-radius: 18px; /* ИЗМЕНЕНИЕ: Изменено на 18px для соответствия дизайну */
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05); /* ИЗМЕНЕНИЕ: Изменено для соответствия дизайну */
+            overflow: hidden;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .square-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* ИЗМЕНЕНИЕ: Новые стили для нижнего меню */
+        footer {
+            flex-shrink: 0;
+        }
+
+        .bottom-nav {
+            display: flex;
+            justify-content: space-around;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-top: 1px solid #E5E5EA;
+            padding-top: 10px;
+            padding-bottom: calc(20px + env(safe-area-inset-bottom));
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #8A8A8E;
+            text-decoration: none;
+            font-size: 10px;
+        }
+
+        .nav-item i {
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+
+        .nav-item.active {
+            color: #7f817c;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="mobile-frame">
+        <header>
+            <a href="gym.html" class="back-button">
+                <i class="fa-solid fa-chevron-left"></i>
+            </a>
+            <h1>Зал — Неделя 3</h1>
+        </header>
+
+        <main>
+            <div class="days-grid">
+                <a href="3-ponedelnik-zal.html" class="day-btn">Понедельник</a>
+                <a href="3-sreda-zal.html" class="day-btn">Среда</a>
+                <a href="3-pyatnica-zal.html" class="day-btn">Пятница</a>
+            </div>
+            <div class="square-image">
+                <!-- Вставьте ссылку на вашу картинку -->
+                <img src="images/gym2.jpg" alt="Квадратная картинка">
+            </div>
+        </main>
+        
+        <footer>
+            <nav class="bottom-nav">
+                <a href="main.html" class="nav-item">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Главная</span>
+                </a>
+                <!-- Вкладка "Тренировки" активна -->
+                <a href="treningmain.html" class="nav-item active">
+                    <i class="fa-solid fa-dumbbell"></i>
+                    <span>Тренировки</span>
+                </a>
+                <a href="foodmain.html" class="nav-item">
+                    <i class="fa-solid fa-utensils"></i>
+                    <span>Питание</span>
+                </a>
+                <a href="profile.html" class="nav-item">
+                    <i class="fa-solid fa-user"></i>
+                    <span>Профиль</span>
+                </a>
+            </nav>
+        </footer>
+    </div>
+</body>
+</html>

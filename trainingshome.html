@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    
+    <title>Тренировки для дома</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Стили для фона */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #dcdcdc; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Контейнер использует Flexbox для фиксации хедера и футера */
+        .mobile-frame {
+            width: 100%;
+            max-width: 430px;
+            height: 100vh;
+            background-color: #F9F4F2;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        /* Стили для заголовка */
+        header {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            padding-bottom: 10px;
+            flex-shrink: 0;
+        }
+
+        .back-button {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 22px;
+            color: #333;
+            text-decoration: none;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin: 0;
+        }
+
+        /* Основной контент является прокручиваемой областью */
+        main {
+            padding: 10px 16px;
+            flex-grow: 1;
+            overflow-y: auto;
+             -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+         main::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* ИЗМЕНЕНИЕ: Стили для информационного баннера */
+        .info-banner {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 18px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .info-banner-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 0 0 5px 0;
+        }
+        .info-banner-desc {
+            font-size: 15px;
+            color: #555;
+            margin: 0;
+        }
+
+        /* Контейнер для кнопок, как на других страницах */
+        .menu-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .menu-button {
+            background-color: #ffffff;
+            color: #000;
+            border-radius: 18px;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            padding: 20px 15px;
+            transition: transform 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        .menu-button:active {
+            transform: scale(0.97);
+            background-color: #f0f0f0;
+        }
+        .menu-button i {
+            font-size: 24px;
+            margin: 0;
+            margin-bottom: 12px;
+            color: #b4f24c;
+        }
+        
+        footer {
+            flex-shrink: 0;
+        }
+
+        .bottom-nav {
+            display: flex;
+            justify-content: space-around;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-top: 1px solid #E5E5EA;
+            padding-top: 10px;
+            padding-bottom: calc(20px + env(safe-area-inset-bottom));
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #8A8A8E;
+            text-decoration: none;
+            font-size: 10px;
+        }
+        .nav-item i {
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+        .nav-item.active {
+            color: #83867e;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="mobile-frame">
+        <header>
+            <a href="treningmain.html" class="back-button">
+                <i class="fa-solid fa-chevron-left"></i>
+            </a>
+            <h1>Тренировки для дома</h1>
+        </header>
+
+        <main>
+            <!-- Информационный баннер -->
+            <div class="info-banner">
+                <div class="info-banner-title">Тренировки</div>
+                <div class="info-banner-desc">Выберите неделю и приступайте к занятиям</div>
+            </div>
+
+            <!-- Сетка с неделями тренировок -->
+            <div class="menu-container">
+                <a href="trainings-week1.html" class="menu-button">
+                    <i class="fa-solid fa-calendar-week"></i>
+                    <span>Неделя 1</span>
+                </a>
+                <a href="trainings-week2.html" class="menu-button">
+                    <i class="fa-solid fa-calendar-week"></i>
+                    <span>Неделя 2</span>
+                </a>
+                <a href="trainings-week3.html" class="menu-button">
+                    <i class="fa-solid fa-calendar-week"></i>
+                    <span>Неделя 3</span>
+                </a>
+                <a href="trainings-week4.html" class="menu-button">
+                    <i class="fa-solid fa-calendar-week"></i>
+                    <span>Неделя 4</span>
+                </a>
+            </div>
+        </main>
+        
+        <footer>
+            <nav class="bottom-nav">
+                <a href="main.html" class="nav-item">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Главная</span>
+                </a>
+                <a href="treningmain.html" class="nav-item active">
+                    <i class="fa-solid fa-dumbbell"></i>
+                    <span>Тренировки</span>
+                </a>
+                <a href="food.html" class="nav-item">
+                    <i class="fa-solid fa-utensils"></i>
+                    <span>Питание</span>
+                </a>
+                <a href="profile.html" class="nav-item">
+                    <i class="fa-solid fa-user"></i>
+                    <span>Профиль</span>
+                </a>
+            </nav>
+        </footer>
+    </div>
+
+</body>
+</html>

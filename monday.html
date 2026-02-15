@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    
+    <title>Понедельник — Неделя 1</title>
+    <!-- ИЗМЕНЕНИЕ: Подключена библиотека иконок для нового меню -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* ИЗМЕНЕНИЕ: Общие стили для "мобильной рамки" и фона */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #dcdcdc; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .mobile-frame {
+            width: 100%;
+            max-width: 430px;
+            height: 100vh;
+            background-color: #F9F4F2;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        header {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            padding-bottom: 10px;
+            flex-shrink: 0;
+        }
+
+        .back-button {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 22px;
+            color: #333;
+            text-decoration: none;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin: 0;
+            text-align: center; /* Центрируем заголовок */
+        }
+
+        main {
+            padding: 10px 16px;
+            padding-bottom: 20px; /* Отступ снизу */
+            flex-grow: 1;
+            overflow-y: auto;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        main::-webkit-scrollbar {
+            display: none;
+        }
+        /* КОНЕЦ ИЗМЕНЕНИЙ для "мобильной рамки" */
+
+        .instruction-block {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            padding: 20px;
+            margin-bottom: 20px;
+            width: 100%;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .instruction-block h2 { /* ИЗМЕНЕНИЕ: Убрал общие стили h1, так как теперь есть header h1 */
+            text-align: center;
+            color: #2c3e50;
+            margin: 0 0 10px 0;
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+        .exercise-list {
+            width: 100%;
+            margin: 0 0 14px 0;
+            padding: 0;
+            list-style: decimal inside;
+            font-size: 1em;
+            font-weight: 600;
+            line-height: 1.6;
+        }
+        .exercise-list li {
+            margin-bottom: 8px;
+            text-align: left;
+        }
+        .rest, .note {
+            margin: 0 0 10px 0;
+            font-size: 0.98em;
+            color: #444;
+            text-align: center;
+            text-decoration: underline;
+        }
+        .videos-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+            width: 100%;
+            max-width: 100%;
+            margin: 0 auto 16px auto;
+        }
+        .video-item {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            margin-bottom: 20px; /* Добавлен отступ для видео */
+        }
+        .video-item:last-child {
+            margin-bottom: 0; /* Убираем отступ у последнего видео */
+        }
+        .video-preview {
+            width: 100%;
+            aspect-ratio: 9 / 16;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-radius: 16px 16px 0 0;
+        }
+        .video-preview video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            background: #000;
+        }
+        .video-caption {
+            padding: 12px 8px;
+            font-size: 1rem;
+            color: #222;
+            text-align: center;
+            background: #faf9f6;
+            border-radius: 0 0 16px 16px;
+            min-height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 500;
+        }
+        /* ИЗМЕНЕНИЕ: Стили для нижнего меню */
+        footer {
+            flex-shrink: 0;
+        }
+
+        .bottom-nav {
+            display: flex;
+            justify-content: space-around;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-top: 1px solid #E5E5EA;
+            padding-top: 10px;
+            padding-bottom: calc(20px + env(safe-area-inset-bottom));
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #8A8A8E;
+            text-decoration: none;
+            font-size: 10px;
+        }
+
+        .nav-item i {
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+
+        .nav-item.active {
+            color: #7f817c;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="mobile-frame">
+        <header>
+            <a href="treningmain.html" class="back-button">
+                <i class="fa-solid fa-chevron-left"></i>
+            </a>
+            <h1>Понедельник — Неделя 1</h1>
+        </header>
+
+        <main>
+            <div class="instruction-block">
+                <h2>Тренировка 1</h2>
+                <div style="font-weight: 600; margin-bottom: 10px;">Сделайте разминку обязательно</div>
+                <ol class="exercise-list">
+                    <li>Приседания 20 раз / 3 подхода</li>
+                    <li>Шаг на месте 20 раз / 3 подхода</li>
+                    <li>Ягодичный мостик с резинкой 20 раз / 3 подхода</li>
+                    <li>Разгибание рук с гантелями за головой 15 раз / 3 подхода</li>
+                    <li>Скручивание 20 раз / 3 подхода</li>
+                </ol>
+                <div class="rest">
+                    Отдых между подходами 60 секунд<br>
+                    Между упражнениями до двух минут
+                </div>
+                <div class="note">
+                    После тренировки сделать заминку-растяжку.
+                </div>
+            </div>
+            <div class="videos-grid">
+                <div class="video-item">
+                    <div class="video-preview">
+                        <video controls controlsList="nodownload" width="100%" preload="metadata">
+                            <source src="https://storage2.bothelp.io/myuppy/df/df01/df01bbd1fcac069fe59cefddbe69fe0b/1_Prisedanie_s_rezinkoy.mp4#t=0.1" type="video/mp4">
+                            Ваш браузер не поддерживает видео.
+                        </video>
+                    </div>
+                    <div class="video-caption">Приседания</div>
+                </div>
+                <div class="video-item">
+                    <div class="video-preview">
+                        <video controls controlsList="nodownload" width="100%" preload="metadata">
+                            <source src="https://storage2.bothelp.io/myuppy/7e/7e60/7e60b2ce6851aad416b26f40846de18c/2_SHag_na_meste_1.mp4#t=0.1" type="video/mp4">
+                            Ваш браузер не поддерживает видео.
+                        </video>
+                    </div>
+                    <div class="video-caption">Шаг на месте</div>
+                </div>
+                <div class="video-item">
+                    <div class="video-preview">
+                        <video controls controlsList="nodownload" width="100%" preload="metadata">
+                            <source src="https://storage2.bothelp.io/myuppy/ee/ee65/ee65e60a56a2495dedab6049d4942f12/3_YAgodichnyiy_mostik_1.mp4#t=0.1" type="video/mp4">
+                            Ваш браузер не поддерживает видео.
+                        </video>
+                    </div>
+                    <div class="video-caption">Ягодичный мостик</div>
+                </div>
+                <div class="video-item">
+                    <div class="video-preview">
+                        <video controls controlsList="nodownload" width="100%" preload="metadata">
+                            <source src="https://storage2.bothelp.io/myuppy/79/79fb/79fb39552427e76d7350e17f1d687496/4_Razgibanie_ruk_s_gantelyami_1.mp4#t=0.1" type="video/mp4">
+                            Ваш браузер не поддерживает видео.
+                        </video>
+                    </div>
+                    <div class="video-caption">Разгибание рук с гантелями</div>
+                </div>
+                <div class="video-item">
+                    <div class="video-preview">
+                        <video controls controlsList="nodownload" width="100%" preload="metadata">
+                            <source src="https://storage2.bothelp.io/myuppy/3b/3b0f/3b0fc5d333fb8107144417e135ab37dd/5_Skruchivanie_1.mp4#t=0.1" type="video/mp4">
+                            Ваш браузер не поддерживает видео.
+                        </video>
+                    </div>
+                    <div class="video-caption">Скручивание</div>
+                </div>
+            </div>
+        </main>
+        
+        <footer>
+            <nav class="bottom-nav">
+                <a href="main.html" class="nav-item">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Главная</span>
+                </a>
+                <!-- Вкладка "Тренировки" активна -->
+                <a href="treningmain.html" class="nav-item active">
+                    <i class="fa-solid fa-dumbbell"></i>
+                    <span>Тренировки</span>
+                </a>
+                <a href="foodmain.html" class="nav-item">
+                    <i class="fa-solid fa-utensils"></i>
+                    <span>Питание</span>
+                </a>
+                <a href="profile.html" class="nav-item">
+                    <i class="fa-solid fa-user"></i>
+                    <span>Профиль</span>
+                </a>
+            </nav>
+        </footer>
+    </div>
+
+    <script>
+        // Возвращаем видео на начало при первом запуске (если использовали #t=0.1)
+        document.querySelectorAll('video').forEach(video => {
+            video.addEventListener('play', function() {
+                this.currentTime = 0;
+            }, { once: true });
+        });
+    </script>
+</body>
+</html>

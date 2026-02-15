@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <title>Читмил</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #dcdcdc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .mobile-frame {
+            width: 100%;
+            max-width: 430px;
+            height: 100vh;
+            background-color: #F9F4F2;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        header {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            padding-bottom: 10px;
+            flex-shrink: 0;
+        }
+        .back-button {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 22px;
+            color: #333;
+            text-decoration: none;
+        }
+        h1 {
+            font-size: 24px;
+            margin: 0;
+        }
+        main {
+            padding: 0 16px;
+            padding-bottom: calc(20px + 66px);
+            flex-grow: 1;
+            overflow-y: auto;
+            color: #222;
+        }
+        main::-webkit-scrollbar {
+            display: none;
+        }
+        .image-container {
+            width: 100%;
+            margin: 20px 0;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: center;
+        }
+        .image-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .text-content {
+            background-color: #fff;
+            border-radius: 18px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        .text-content h2 {
+            margin-top: 0;
+            font-size: 1.5em;
+            color: #2c3e50;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        .text-content p {
+            margin: 0 0 14px 0;
+        }
+        .text-content strong {
+            font-weight: 700;
+            color: #2c3e50;
+        }
+        .text-content ul {
+            margin: 0 0 14px 20px;
+            padding: 0;
+        }
+        footer {
+            flex-shrink: 0;
+        }
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 430px;
+            display: flex;
+            justify-content: space-around;
+            background-color: rgba(255,255,255,0.9);
+            border-top: 1px solid #E5E5EA;
+            padding-top: 10px;
+            padding-bottom: calc(20px + env(safe-area-inset-bottom));
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            height: 66px;
+            box-sizing: border-box;
+            border-radius: 18px 18px 0 0;
+            z-index: 100;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #8A8A8E;
+            text-decoration: none;
+            font-size: 10px;
+            user-select: none;
+        }
+        .nav-item i {
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+        .nav-item.active {
+            color: #8d8f8a;
+        }
+    </style>
+</head>
+<body>
+    <div class="mobile-frame">
+        <header>
+            <a href="foodmain.html" class="back-button" aria-label="Назад">
+                <i class="fa-solid fa-chevron-left"></i>
+            </a>
+            <h1>Читмил</h1>
+        </header>
+
+        <main>
+            <div class="image-container">
+                <img src="https://storage2.bothelp.io/myuppy/e5/e567/e567345e63754cc4fc9adb376f70b3b6/photo_2025-02-01_16-11-53.jpg" alt="Читмил" />
+            </div>
+
+            <div class="text-content">
+                <p><strong>В воскресенье</strong> мы можем себе позволить читмил.</p>
+
+                <p><strong>Что же такое читмил? Для чего он нужен?</strong></p>
+
+                <p>Читмил – это запланированное нарушение диеты, то есть отклонение от прописанного рациона. Например, шесть дней в неделю вы соблюдаете режим питания, на седьмой день вы можете себе позволить одну вкусняшку, только одну ☝️. Это и будет ваш читмил.</p>
+
+                <p>Если вдруг в середине недели вы решаете съесть какое-нибудь лакомство, не входящее в ваш рацион, во время марафона, то это называется «срыв» и не имеет ничего общего с читмилом. Запланированное отклонение от диеты, или читмил, – это санкционированное нарушение, которое совершается не просто так.</p>
+
+                <p>Среди плюсов читмила можно назвать психологическую разгрузку организма и возможность разнообразить рацион.</p>
+
+                <p>Но есть такие девушки, которые позволяют себе читмил и потом никак не могут перестать думать о следующем читмиле. Это плохо и это больше психологическая проблема.</p>
+
+                <p>Как правило, читмилы проводят на стадии жиросжигания (сушки) для разгона обмена веществ. Это еще один большой плюс такого питания, помимо психологической разгрузки. Вот почему наш обмен веществ периодически нуждается в «раскрутке».</p>
+
+                <p>Так что думаем головой, учимся себя контролировать и держать в руках 🙌, чтобы не срываться.</p>
+            </div>
+        </main>
+
+        <footer>
+            <nav class="bottom-nav" role="navigation" aria-label="Основное меню">
+                <a href="main.html" class="nav-item">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Главная</span>
+                </a>
+                <a href="treningmain.html" class="nav-item">
+                    <i class="fa-solid fa-dumbbell"></i>
+                    <span>Тренировки</span>
+                </a>
+                <a href="foodmain.html" class="nav-item active" aria-current="page">
+                    <i class="fa-solid fa-utensils"></i>
+                    <span>Питание</span>
+                </a>
+                <a href="profile.html" class="nav-item">
+                    <i class="fa-solid fa-user"></i>
+                    <span>Профиль</span>
+                </a>
+            </nav>
+        </footer>
+    </div>
+</body>
+</html>

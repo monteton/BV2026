@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    
+    <title>Среда — Неделя 3</title>
+    <!-- ИЗМЕНЕНИЕ: Подключена библиотека иконок для нового меню -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* ИЗМЕНЕНИЕ: Общие стили для "мобильной рамки" и фона */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #dcdcdc; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .mobile-frame {
+            width: 100%;
+            max-width: 430px;
+            height: 100vh;
+            background-color: #F9F4F2;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        header {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            padding-bottom: 10px;
+            flex-shrink: 0;
+        }
+
+        .back-button {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 22px;
+            color: #333;
+            text-decoration: none;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin: 0;
+            text-align: center; /* Центрируем заголовок */
+        }
+
+        main {
+            padding: 10px 16px;
+            padding-bottom: 20px; /* Отступ снизу */
+            flex-grow: 1;
+            overflow-y: auto;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        main::-webkit-scrollbar {
+            display: none;
+        }
+        /* КОНЕЦ ИЗМЕНЕНИЙ для "мобильной рамки" */
+
+        .instruction-block {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            padding: 20px 16px;
+            margin-bottom: 20px;
+            width: 100%;
+            box-sizing: border-box;
+            text-align: left;
+        }
+        .instruction-block h2 {
+            text-align: center;
+            color: #2c3e50;
+            margin: 0 0 10px 0;
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+        .important {
+            text-align: center;
+            font-weight: 600;
+            margin: 10px 0 12px 0;
+            text-decoration: underline;
+        }
+        .exercise-list {
+            margin: 0 0 16px 0;
+            padding: 0 0 0 18px;
+            font-size: 1em;
+            font-weight: 600;
+            line-height: 1.6;
+        }
+        .details {
+            font-size: 0.98em;
+            margin: 10px 0;
+            text-align: center;
+        }
+        .note {
+            font-size: 0.98em;
+            color: #444;
+            text-align: center;
+            text-decoration: underline;
+            margin-top: 10px;
+        }
+        .videos-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+            width: 100%;
+            max-width: 100%;
+            margin: 0 auto 16px auto;
+        }
+        .video-item {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            margin-bottom: 20px; /* Добавлен отступ для видео */
+        }
+        .video-item:last-child {
+            margin-bottom: 0; /* Убираем отступ у последнего видео */
+        }
+        .video-preview {
+            width: 100%;
+            aspect-ratio: 9 / 16;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-radius: 16px 16px 0 0;
+        }
+        .video-preview video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            background: #000;
+        }
+        .video-caption {
+            padding: 12px 8px;
+            font-size: 1rem;
+            color: #222;
+            text-align: center;
+            background: #faf9f6;
+            border-radius: 0 0 16px 16px;
+            min-height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 500;
+        }
+        
+        /* ИЗМЕНЕНИЕ: Новые стили для нижнего меню */
+        footer {
+            flex-shrink: 0;
+        }
+
+        .bottom-nav {
+            display: flex;
+            justify-content: space-around;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-top: 1px solid #E5E5EA;
+            padding-top: 10px;
+            padding-bottom: calc(20px + env(safe-area-inset-bottom));
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #8A8A8E;
+            text-decoration: none;
+            font-size: 10px;
+        }
+
+        .nav-item i {
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+
+        .nav-item.active {
+            color: #7f817c;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="mobile-frame">
+        <header>
+            <a href="treningmain.html" class="back-button">
+                <i class="fa-solid fa-chevron-left"></i>
+            </a>
+            <h1>Неделя 3<br>Тренировка 8</h1>
+        </header>
+
+        <main>
+            <div class="instruction-block">
+                <h2><u>Сделайте разминку обязательно</u></h2>
+                <ol class="exercise-list">
+                    <li>Стульчик 30-60 секунд / 4 подхода</li>
+                    <li>Мобильность плечевого сустава 15-20 раз / 3 подхода</li>
+                    <li>Круги руками с гантелями 15 раз / 3 подхода</li>
+                    <li>Французский жим лёжа 20 раз / 4 подхода</li>
+                    <li>Обратные скручивания 15-20 раз / 4 подхода</li>
+                </ol>
+                <div class="details">
+                    <div>Отдых между подходами 60 секунд</div>
+                    <div>Между упражнениями до двух минут</div>
+                </div>
+                <div class="note">
+                    После тренировки сделать заминку-растяжку.
+                </div>
+            </div>
+            <div class="videos-grid">
+                <div class="video-item">
+                    <div class="video-preview">
+                        <video controls controlsList="nodownload" width="100%" preload="metadata">
+                            <source src="https://storage2.bothelp.io/myuppy/c3/c3a5/c3a5007628029a8ec12a5d598dda1282/11_Uprajnenie_Stul_chik.mp4#t=0.1" type="video/mp4">
+                            Ваш браузер не поддерживает видео.
+                        </video>
+                    </div>
+                    <div class="video-caption">Стульчик</div>
+                </div>
+                <div class="video-item">
+                    <div class="video-preview">
+                        <video controls controlsList="nodownload" width="100%" preload="metadata">
+                            <source src="https://storage2.bothelp.io/myuppy/66/6650/6650aa59f90af3c035d484c05de2b241/1_Uprajnenie_Mobil_nost__plechevogo_sustava_1.mp4#t=0.1" type="video/mp4">
+                            Ваш браузер не поддерживает видео.
+                        </video>
+                    </div>
+                    <div class="video-caption">Мобильность плечевого сустава</div>
+                </div>
+                <div class="video-item">
+                    <div class="video-preview">
+                        <video controls controlsList="nodownload" width="100%" preload="metadata">
+                            <source src="https://storage2.bothelp.io/myuppy/95/9522/9522f65a1683e41306893a544ac80e38/2_Uprajnenie_Krugi_rukami_s_gantelyami.mp4#t=0.1" type="video/mp4">
+                            Ваш браузер не поддерживает видео.
+                        </video>
+                    </div>
+                    <div class="video-caption">Круги руками с гантелями</div>
+                </div>
+                <div class="video-item">
+                    <div class="video-preview">
+                        <video controls controlsList="nodownload" width="100%" preload="metadata">
+                            <source src="https://storage2.bothelp.io/myuppy/12/12e0/12e05d2a81fb7cdd5982f3f113fd60c9/3_Uprajnenie_Frantsuzskiy_jim_leja.mp4#t=0.1" type="video/mp4">
+                            Ваш браузер не поддерживает видео.
+                        </video>
+                    </div>
+                    <div class="video-caption">Французский жим лёжа</div>
+                </div>
+                <div class="video-item">
+                    <div class="video-preview">
+                        <video controls controlsList="nodownload" width="100%" preload="metadata">
+                            <source src="https://storage2.bothelp.io/myuppy/a8/a8c0/a8c07f6ed866de261f164c0035cbac90/4_Uprajnenie_Obratnyie_skruchivaniya.mp4#t=0.1" type="video/mp4">
+                            Ваш браузер не поддерживает видео.
+                        </video>
+                    </div>
+                    <div class="video-caption">Обратные скручивания</div>
+                </div>
+            </div>
+        </main>
+        
+        <footer>
+            <nav class="bottom-nav">
+                <a href="main.html" class="nav-item">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Главная</span>
+                </a>
+                <!-- Вкладка "Тренировки" активна -->
+                <a href="treningmain.html" class="nav-item active">
+                    <i class="fa-solid fa-dumbbell"></i>
+                    <span>Тренировки</span>
+                </a>
+                <a href="foodmain.html" class="nav-item">
+                    <i class="fa-solid fa-utensils"></i>
+                    <span>Питание</span>
+                </a>
+                <a href="profile.html" class="nav-item">
+                    <i class="fa-solid fa-user"></i>
+                    <span>Профиль</span>
+                </a>
+            </nav>
+        </footer>
+    </div>
+
+    <script>
+        // Возвращаем видео на начало при первом запуске (чтобы не было задержки на кадре из #t=0.1)
+        document.querySelectorAll('video').forEach(video => {
+            video.addEventListener('play', function() {
+                this.currentTime = 0;
+            }, { once: true });
+        });
+    </script>
+</body>
+</html>

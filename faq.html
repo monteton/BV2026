@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ответы на вопросы</title>
+    <!-- ИЗМЕНЕНИЕ: Подключена библиотека иконок для нового меню -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            background: #faf9f6;
+            color: #222;
+            font-family: 'Inter', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 420px;
+            margin: 0 auto;
+            /* Отступ снизу под новое меню */
+            padding: 16px 16px 100px 16px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin: 0 0 20px 0;
+            font-size: 1.5em;
+        }
+
+        p {
+            font-size: 1em;
+            color: #444;
+            text-align: center;
+            margin: 0 0 16px 0;
+        }
+
+        .pdf-btn {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            padding: 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: #222;
+            font-size: 1.12em;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+            width: 100%;
+            max-width: 260px;
+            margin: 16px auto;
+            border: none;
+            cursor: pointer;
+        }
+
+        .pdf-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(44, 62, 80, 0.13);
+        }
+
+        /* ИЗМЕНЕНИЕ: Новые стили для нижнего меню */
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            max-width: 430px;
+            margin: 0 auto;
+            z-index: 100;
+        }
+
+        .bottom-nav {
+            display: flex;
+            justify-content: space-around;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-top: 1px solid #E5E5EA;
+            padding-top: 10px;
+            padding-bottom: calc(20px + env(safe-area-inset-bottom));
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #8A8A8E;
+            text-decoration: none;
+            font-size: 10px;
+        }
+
+        .nav-item i {
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+
+        .nav-item.active {
+            color: #7f817c;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Ответы на вопросы</h1>
+        <p>В этом файле собраны ответы на самые задаваемые вопросы.</p>
+        <a class="pdf-btn" href="view-pdf.html?file=pdfs/faq.pdf&back=faq.html&title=Ответы на вопросы">Открыть PDF</a>
+    </div>
+
+    <!-- ИЗМЕНЕНИЕ: Новый блок навигации -->
+    <footer>
+        <nav class="bottom-nav">
+            <a href="main.html" class="nav-item">
+                <i class="fa-solid fa-house"></i>
+                <span>Главная</span>
+            </a>
+            <a href="treningmain.html" class="nav-item">
+                <i class="fa-solid fa-dumbbell"></i>
+                <span>Тренировки</span>
+            </a>
+            <a href="foodmain.html" class="nav-item">
+                <i class="fa-solid fa-utensils"></i>
+                <span>Питание</span>
+            </a>
+            <!-- Вкладка "Профиль" активна для этой страницы -->
+            <a href="profile.html" class="nav-item active">
+                <i class="fa-solid fa-user"></i>
+                <span>Профиль</span>
+            </a>
+        </nav>
+    </footer>
+</body>
+
+</html>

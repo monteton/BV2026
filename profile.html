@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    
+    <title>Ваш профиль — Гайд по тренировкам</title>
+    <!-- ИЗМЕНЕНИЕ: Подключена библиотека иконок для нового меню -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* ИЗМЕНЕНИЕ: Общие стили для "мобильной рамки" и фона */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #dcdcdc; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .mobile-frame {
+            width: 100%;
+            max-width: 430px;
+            height: 100vh;
+            background-color: #F9F4F2;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        header {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            padding-bottom: 10px;
+            flex-shrink: 0;
+        }
+
+        .back-button {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 22px;
+            color: #333;
+            text-decoration: none;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin: 0;
+            text-align: center; /* Центрируем заголовок */
+        }
+
+        main {
+            padding: 10px 16px;
+            padding-bottom: 20px; /* Отступ снизу */
+            flex-grow: 1;
+            overflow-y: auto;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        main::-webkit-scrollbar {
+            display: none;
+        }
+        /* КОНЕЦ ИЗМЕНЕНИЙ для "мобильной рамки" */
+
+        /* Инструменты и ресурсы */
+        .tools-section {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            padding: 20px;
+            width: 100%;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+        }
+        .tools-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .tool-item {
+            position: relative;
+            padding-bottom: 12px;
+        }
+        .tool-item:not(:last-child)::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #eee;
+        }
+        .tool-button {
+            background: transparent;
+            color: #2c3e50;
+            border: none;
+            border-radius: 12px;
+            padding: 14px 10px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            text-align: left;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+        }
+        .tool-button:hover {
+            background: rgba(44,62,80,0.05);
+        }
+        .tool-icon {
+            font-size: 1.4em;
+        }
+        /* Информационный блок */
+        .info-text {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            padding: 20px;
+            width: 100%;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+            line-height: 1.5;
+            color: #444;
+        }
+        /* Форма параметров */
+        .form-section {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            padding: 20px;
+            margin-bottom: 20px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #444;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+        .action-button {
+            background: #2c3e50;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 12px 20px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+            transition: background 0.3s;
+        }
+        .action-button:hover {
+            background: #1a2635;
+        }
+        /* Результаты */
+        .result-section {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            padding: 25px;
+            width: 100%;
+            box-sizing: border-box;
+            display: none;
+            text-align: center;
+        }
+        .celebration {
+            font-size: 1.8em;
+            color: #27ae60;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        .progress-card {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid #27ae60;
+        }
+        .progress-title {
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: #2c3e50;
+        }
+        .progress-value {
+            font-size: 1.2em;
+            font-weight: 700;
+        }
+        .positive {
+            color: #27ae60;
+        }
+        .negative {
+            color: #e74c3c;
+        }
+
+        /* ИЗМЕНЕНИЕ: Новые стили для нижнего меню */
+        footer {
+            flex-shrink: 0;
+        }
+
+        .bottom-nav {
+            display: flex;
+            justify-content: space-around;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-top: 1px solid #E5E5EA;
+            padding-top: 10px;
+            padding-bottom: calc(20px + env(safe-area-inset-bottom));
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #8A8A8E;
+            text-decoration: none;
+            font-size: 10px;
+        }
+
+        .nav-item i {
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+
+        .nav-item.active {
+            color: #7f817c;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="mobile-frame">
+        <header>
+            <!-- На странице профиля нет кнопки "назад", но если она нужна, раскомментируйте ниже -->
+            <!-- <a href="javascript:history.back()" class="back-button">
+                <i class="fa-solid fa-chevron-left"></i>
+            </a> -->
+            <h1>Ваш профиль</h1>
+        </header>
+
+        <main>
+            
+
+
+            <!-- Пояснение о безопасности данных -->
+            <div class="info-text">
+                Заполните данные преред началом тренировок!Ваши данные надёжно сохраняются локально в вашем браузере и доступны только вам. Это обеспечивает конфиденциальность и безопасность, позволяя вам отслеживать прогресс без риска утечки информации. Обратите внимание, что данные хранятся только на этом устройстве и в этом браузере. Для начала работы введите начальные параметры и нажмите кнопку «Сохранить начальные данные».
+            </div>
+
+
+            <!-- Начальные параметры -->
+            <div class="form-section">
+                <h2>Начальные параметры</h2>
+                <div class="input-group">
+                    <label>Вес (кг)</label>
+                    <input type="number" id="start-weight" step="0.1" required>
+                </div>
+                <div class="input-group">
+                    <label>Обхват талии (см)</label>
+                    <input type="number" id="start-waist" step="0.1" required>
+                </div>
+                <div class="input-group">
+                    <label>Обхват груди (см)</label>
+                    <input type="number" id="start-chest" step="0.1" required>
+                </div>
+                <div class="input-group">
+                    <label>Обхват бедер (см)</label>
+                    <input type="number" id="start-hips" step="0.1" required>
+                </div>
+                <button class="action-button" id="save-start">Сохранить начальные данные</button>
+            </div>
+
+
+            <!-- Текущие параметры -->
+            <div class="form-section">
+                <h2>Текущие параметры</h2>
+                <div class="input-group">
+                    <label>Вес (кг)</label>
+                    <input type="number" id="current-weight" step="0.1" required>
+                </div>
+                <div class="input-group">
+                    <label>Обхват талии (см)</label>
+                    <input type="number" id="current-waist" step="0.1" required>
+                </div>
+                <div class="input-group">
+                    <label>Обхват груди (см)</label>
+                    <input type="number" id="current-chest" step="0.1" required>
+                </div>
+                <div class="input-group">
+                    <label>Обхват бедер (см)</label>
+                    <input type="number" id="current-hips" step="0.1" required>
+                </div>
+                <button class="action-button" id="calculate">Сравнить и показать прогресс</button>
+                <button class="action-button" id="reset-current">Сбросить текущие данные</button>
+            </div>
+
+
+            <!-- Результаты -->
+            <div class="result-section" id="result-section">
+                <div class="celebration">🎉 Поздравляем с результатами!</div>
+                
+                <div class="progress-card">
+                    <div class="progress-title">Вес</div>
+                    <div class="progress-value" id="result-weight">-2.3 кг</div>
+                </div>
+                
+                <div class="progress-card">
+                    <div class="progress-title">Талия</div>
+                    <div class="progress-value" id="result-waist">-5.1 см</div>
+                </div>
+                
+                <div class="progress-card">
+                    <div class="progress-title">Грудь</div>
+                    <div class="progress-value" id="result-chest">+1.2 см</div>
+                </div>
+                
+                <div class="progress-card">
+                    <div class="progress-title">Бёдра</div>
+                    <div class="progress-value" id="result-hips">-3.4 см</div>
+                </div>
+            </div>
+        </main>
+        
+        <footer>
+            <nav class="bottom-nav">
+                <a href="main.html" class="nav-item">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Главная</span>
+                </a>
+                <a href="treningmain.html" class="nav-item">
+                    <i class="fa-solid fa-dumbbell"></i>
+                    <span>Тренировки</span>
+                </a>
+                <a href="foodmain.html" class="nav-item">
+                    <i class="fa-solid fa-utensils"></i>
+                    <span>Питание</span>
+                </a>
+                <!-- Вкладка "Профиль" активна -->
+                <a href="profile.html" class="nav-item active">
+                    <i class="fa-solid fa-user"></i>
+                    <span>Профиль</span>
+                </a>
+            </nav>
+        </footer>
+    </div>
+
+
+    <script>
+        // Сохранение начальных данных
+        document.getElementById('save-start').addEventListener('click', function() {
+            const startData = {
+                weight: parseFloat(document.getElementById('start-weight').value),
+                waist: parseFloat(document.getElementById('start-waist').value),
+                chest: parseFloat(document.getElementById('start-chest').value),
+                hips: parseFloat(document.getElementById('start-hips').value)
+            };
+            
+            localStorage.setItem('startParams', JSON.stringify(startData));
+            alert('Начальные данные сохранены!');
+        });
+
+
+        // Загрузка сохранённых данных при открытии страницы
+        window.addEventListener('load', function() {
+            const savedData = localStorage.getItem('startParams');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                document.getElementById('start-weight').value = data.weight || '';
+                document.getElementById('start-waist').value = data.waist || '';
+                document.getElementById('start-chest').value = data.chest || '';
+                document.getElementById('start-hips').value = data.hips || '';
+            }
+        });
+
+
+        // Расчёт прогресса
+        document.getElementById('calculate').addEventListener('click', function() {
+            const startData = JSON.parse(localStorage.getItem('startParams') || '{}');
+            
+            const currentData = {
+                weight: parseFloat(document.getElementById('current-weight').value),
+                waist: parseFloat(document.getElementById('current-waist').value),
+                chest: parseFloat(document.getElementById('current-chest').value),
+                hips: parseFloat(document.getElementById('current-hips').value)
+            };
+            
+            // Проверка наличия начальных данных
+            if (!startData.weight) {
+                alert('Сначала сохраните начальные данные!');
+                return;
+            }
+            
+            // Расчёт изменений
+            const results = {
+                weight: currentData.weight - startData.weight,
+                waist: currentData.waist - startData.waist,
+                chest: currentData.chest - startData.chest,
+                hips: currentData.hips - startData.hips
+            };
+            
+            // Обновление интерфейса
+            document.getElementById('result-weight').textContent = 
+                `${results.weight > 0 ? '+' : ''}${results.weight.toFixed(1)} кг`;
+            document.getElementById('result-weight').className = 
+                `progress-value ${results.weight < 0 ? 'positive' : 'negative'}`;
+                
+            document.getElementById('result-waist').textContent = 
+                `${results.waist > 0 ? '+' : ''}${results.waist.toFixed(1)} см`;
+            document.getElementById('result-waist').className = 
+                `progress-value ${results.waist < 0 ? 'positive' : 'negative'}`;
+                
+            document.getElementById('result-chest').textContent = 
+                `${results.chest > 0 ? '+' : ''}${results.chest.toFixed(1)} см`;
+            document.getElementById('result-chest').className = 
+                `progress-value ${results.chest > 0 ? 'positive' : 'negative'}`;
+                
+            document.getElementById('result-hips').textContent = 
+                `${results.hips > 0 ? '+' : ''}${results.hips.toFixed(1)} см`;
+            document.getElementById('result-hips').className = 
+                `progress-value ${results.hips < 0 ? 'positive' : 'negative'}`;
+            
+            document.getElementById('result-section').style.display = 'block';
+            document.getElementById('result-section').scrollIntoView({ behavior: 'smooth' });
+        });
+
+
+        // Сброс текущих данных
+        document.getElementById('reset-current').addEventListener('click', function() {
+            document.getElementById('current-weight').value = '';
+            document.getElementById('current-waist').value = '';
+            document.getElementById('current-chest').value = '';
+            document.getElementById('current-hips').value = '';
+            alert('Текущие данные сброшены!');
+        });
+    </script>
+</body>
+</html>

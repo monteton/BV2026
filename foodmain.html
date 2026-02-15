@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    
+    <title>Питание</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #dcdcdc; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .mobile-frame {
+            width: 100%;
+            max-width: 430px;
+            height: 100vh;
+            background-color: #F9F4F2;
+            position: relative;
+            overflow-y: auto;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            display: flex;
+            flex-direction: column;
+        }
+        .mobile-frame::-webkit-scrollbar {
+            display: none;
+        }
+        header {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            padding-bottom: 10px;
+            flex-shrink: 0;
+        }
+        .back-button {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 22px;
+            color: #333;
+            text-decoration: none;
+        }
+        h1 {
+            font-size: 24px;
+            margin: 0;
+        }
+        main {
+            padding: 0 16px;
+            padding-bottom: 100px;
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+        .menu-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px; /* межклеточный отступ */
+            margin: 10px; /* отступ контейнера от краёв */
+        }
+        .menu-button {
+            min-height: 70px; /* уменьшена высота */
+            width: 100%;
+            background-color: #ffffff;
+            color: #000;
+            border-radius: 18px;
+            text-decoration: none;
+            font-size: 14px; /* чуть меньше шрифт */
+            font-weight: 600;
+            padding: 14px 12px; /* чуть меньше паддинг */
+            transition: transform 0.2s ease, background-color 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            user-select: none;
+            word-wrap: break-word;
+            white-space: normal;
+            margin: 6px; /* отступ вокруг каждой кнопки */
+            box-sizing: border-box;
+        }
+        .menu-button:hover {
+            background-color: #e5e5e5;
+        }
+        .menu-button:active {
+            transform: scale(0.97);
+            background-color: #dcdcdc;
+        }
+        .menu-button i {
+            font-size: 22px; /* чуть меньше иконка */
+            margin: 0 0 8px 0;
+            color: #b4f24c;
+        }
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 430px;
+            display: flex;
+            justify-content: space-around;
+            background-color: rgba(255,255,255,0.9);
+            border-top: 1px solid #E5E5EA;
+            padding-top: 10px;
+            padding-bottom: calc(20px + env(safe-area-inset-bottom));
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            height: 66px;
+            box-sizing: border-box;
+            border-radius: 18px 18px 0 0;
+            z-index: 100;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #8A8A8E;
+            text-decoration: none;
+            font-size: 10px;
+            user-select: none;
+        }
+        .nav-item i {
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+        .nav-item.active {
+            color: #8d8f8a;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="mobile-frame">
+        <header>
+            <a href="main.html" class="back-button" aria-label="Назад">
+                <i class="fa-solid fa-chevron-left"></i>
+            </a>
+            <h1>Питание</h1>
+        </header>
+
+        <main>
+            <div class="menu-container">
+                <a href="cal.html" class="menu-button">
+                    <i class="fa-solid fa-calculator"></i>
+                    <span>Подсчет калорийности</span>
+                </a>
+                <a href="kzbu.html" class="menu-button">
+                    <i class="fa-solid fa-pie-chart"></i>
+                    <span>Индивидуальный разбор КБЖУ</span>
+                </a>
+                <a href="individual.html" class="menu-button">
+                    <i class="fa-solid fa-pie-chart"></i>
+                    <span>Рацион под свои запросы</span>
+                </a>
+                <a href="foodvideo.html" class="menu-button">
+                    <i class="fa-solid fa-pie-chart"></i>
+                    <span>Полезное видео</span>
+                </a>
+                <a href="food.html" class="menu-button">
+                    <i class="fa-solid fa-book-open"></i>
+                    <span>Меню питания</span>
+                </a>
+                <a href="chitmil.html" class="menu-button">
+                    <i class="fa-solid fa-cookie-bite"></i>
+                    <span>Читмил</span>
+                </a>
+            </div>
+        </main>
+        
+        <footer>
+            <nav class="bottom-nav" role="navigation" aria-label="Основное меню">
+                <a href="main.html" class="nav-item">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Главная</span>
+                </a>
+                <a href="treningmain.html" class="nav-item">
+                    <i class="fa-solid fa-dumbbell"></i>
+                    <span>Тренировки</span>
+                </a>
+                <a href="foodmain.html" class="nav-item active" aria-current="page">
+                    <i class="fa-solid fa-utensils"></i>
+                    <span>Питание</span>
+                </a>
+                <a href="profile.html" class="nav-item">
+                    <i class="fa-solid fa-user"></i>
+                    <span>Профиль</span>
+                </a>
+            </nav>
+        </footer>
+    </div>
+
+</body>
+</html>

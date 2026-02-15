@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    
+    <title>Уход за собой</title>
+    <!-- ИЗМЕНЕНИЕ: Подключена библиотека иконок для нового меню -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* ИЗМЕНЕНИЕ: Общие стили для "мобильной рамки" и фона */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #dcdcdc; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .mobile-frame {
+            width: 100%;
+            max-width: 430px;
+            height: 100vh;
+            background-color: #F9F4F2;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        header {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            padding-bottom: 10px;
+            flex-shrink: 0;
+        }
+
+        .back-button {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 22px;
+            color: #333;
+            text-decoration: none;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin: 0;
+            text-align: center; /* Центрируем заголовок */
+        }
+
+        main {
+            padding: 10px 16px;
+            padding-bottom: 20px; /* Отступ снизу */
+            flex-grow: 1;
+            overflow-y: auto;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        main::-webkit-scrollbar {
+            display: none;
+        }
+        /* КОНЕЦ ИЗМЕНЕНИЙ для "мобильной рамки" */
+
+        .videos-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+            width: 100%;
+            max-width: 100%;
+            margin: 0 auto 16px auto; /* ИЗМЕНЕНИЕ: Убрал margin-top: 16px; из .videos-grid, теперь отступ регулируется padding-top в main */
+        }
+        .video-item {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            margin-bottom: 20px; /* Добавлен отступ для видео */
+        }
+        .video-item:last-child {
+            margin-bottom: 0; /* Убираем отступ у последнего видео */
+        }
+        .video-preview {
+            width: 100%;
+            aspect-ratio: 9 / 16;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-radius: 16px 16px 0 0;
+        }
+        .video-preview video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            background: #000;
+        }
+        .video-caption {
+            padding: 16px 12px;
+            font-size: 1rem;
+            color: #222;
+            background: #faf9f6;
+            border-radius: 0 0 16px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .video-caption h3 {
+            margin: 0 0 4px 0;
+            font-size: 1.2em;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        .video-caption p {
+            margin: 0;
+            font-size: 0.98em;
+            color: #444;
+        }
+        
+        /* ИЗМЕНЕНИЕ: Новые стили для нижнего меню */
+        footer {
+            flex-shrink: 0;
+        }
+
+        .bottom-nav {
+            display: flex;
+            justify-content: space-around;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-top: 1px solid #E5E5EA;
+            padding-top: 10px;
+            padding-bottom: calc(20px + env(safe-area-inset-bottom));
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #8A8A8E;
+            text-decoration: none;
+            font-size: 10px;
+        }
+
+        .nav-item i {
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+
+        .nav-item.active {
+            color: #7f817c;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="mobile-frame">
+        <header>
+            <a href="profile.html" class="back-button">
+                <i class="fa-solid fa-chevron-left"></i>
+            </a>
+            <h1>Полезные советы по уходу за собой</h1>
+        </header>
+
+        <main>
+            <div class="videos-grid">
+                <!-- Видео 1 -->
+                <div class="video-item">
+                    <div class="video-preview">
+                        <video controls controlsList="nodownload" width="100%" style="aspect-ratio: 9 / 16;" preload="metadata">
+                            <source src="https://storage2.bothelp.io/myuppy/39/39d0/39d0e455e0e09a733dad9ce7065da77e/64feb7a47b74f6.5697699524-krasota-i-zdorov-e-4.mp4" type="video/mp4">
+                            Ваш браузер не поддерживает видео.
+                        </video>
+                    </div>
+                    <div class="video-caption">
+                        <h3>Суббота — время для красоты</h3>
+                        <p>
+                            Суббота, не время расслабляться, а время для наведения красоты❤️
+                        </p>
+                        <p>
+                            В субботу, мы будем делать массажи, ходить в баню, сауну, делать всевозможные маски, скрабы. А в воскресенье уже выходной.
+                        </p>
+                        <p>
+                            Маски конечно можно делать чаще, два три раза в неделю. Как нам известно, это очень полезно для нашей кожи. Я Вам предлагаю несколько вариантов масок для тела, антицеллюлитные и увлажняющие.
+                        </p>
+                        <p>
+                            И ещё пару рецептов, действенных масок для тела.
+                        </p>
+                        <p>
+                            ⬇️⬇️⬇️
+                        </p>
+                        <p>
+                            Маску следует делать на основе молотого кофе или кофейной гущи. В качестве питательной основы следует взять измельчённые овсяные хлопья. Они обладают слизистой структурой, закрепляя на себе частички кофе. Овсяные хлопья прекрасно увлажняют кожу и насыщают её полезными витаминами и микроэлементами.
+                        </p>
+                        <p>
+                            И ещё пару рецептов действенных масок для тела.
+                        </p>
+                        <p>
+                            <strong>Ингредиенты:</strong><br>
+                            1. молотый кофе<br>
+                            2. кофейная гуща<br>
+                            3. измельчённые овсяные хлопья
+                        </p>
+                        <p>
+                            <strong>Применение</strong><br>
+                            3 ст. ложки измельчённых овсяных хлопьев смешать с 2 ст. ложками кофейной гущи (можно смешать с 2 ст. ложками молотого кофе, тогда стоит добавить 1 ст. ложку воды для создания жидкой консистенции). Готовую маску необходимо наносить на зоны с целлюлитом лёгкими втирающими движениями по часовой стрелке. Оставить на коже на 15 минут. По истечению времени смыть тёплой водой и высушить кожу. Нанести любое увлажняющее средство.
+                        </p>
+                        <p>
+                            <strong>2 МАСКА.</strong>
+                        </p>
+                        <p>
+                            Маска с мёдом<br>
+                            Мёд обладает огромным количеством микроэлементов, насыщающих и питающих кожу. Вытягивает влагу из кожи, тонизирует её. Мёд содержит фенольный соединения, которые повышают эластичность капилляров, снимают воспаление на коже и способствуют выведению вредного холестерина из неё.
+                        </p>
+                        <p>
+                            <strong>Ингредиенты</strong><br>
+                            1. мёд<br>
+                            2. лимонный сок
+                        </p>
+                        <p>
+                            <strong>Применение</strong><br>
+                            5 ст. ложек мёда смешать с 5 каплями свежевыжатого лимонного сока. Нанести на предварительно очищенную кожу с целлюлитом массажными движениями. Оставить на 10 минут. Смыть тёплой водой, высушить кожу мягким полотенцем промакивающими движениями.
+                        </p>
+                    </div>
+                </div>
+
+
+                <!-- Видео 2 -->
+                <div class="video-item">
+                    <div class="video-preview">
+                        <video controls controlsList="nodownload" width="100%" style="aspect-ratio: 9 / 16;" preload="metadata">
+                            <source src="https://storage2.bothelp.io/myuppy/67/672b/672b7f945b5805080f48c540e7af1001/trim.662CA9B7-EA11-4BC1-B877-27BD34E3EABA.mp4" type="video/mp4">
+                            Ваш браузер не поддерживает видео.
+                        </video>
+                    </div>
+                    <div class="video-caption">
+                        <h3>Видео по уходу за собой</h3>
+                    </div>
+                </div>
+
+
+                <!-- Видео 3 -->
+                <div class="video-item">
+                    <div class="video-preview">
+                        <video controls controlsList="nodownload" width="100%" style="aspect-ratio: 9 / 16;" preload="metadata">
+                            <source src="https://storage2.bothelp.io/myuppy/2d/2dc8/2dc8fcc7b26619bc053895d1b39ed5f5/trim.1B4D74FE-1523-44E8-B5A3-AE1E903D5D7A__1_.mp4" type="video/mp4">
+                            Ваш браузер не поддерживает видео.
+                        </video>
+                    </div>
+                    <div class="video-caption">
+                        <h3>Видео по уходу за собой</h3>
+                    </div>
+                </div>
+
+
+                <!-- Видео 4 -->
+                <div class="video-item">
+                    <div class="video-preview">
+                        <video controls controlsList="nodownload" width="100%" style="aspect-ratio: 9 / 16;" preload="metadata">
+                            <source src="https://storage2.bothelp.io/myuppy/02/0257/02570a29b6df3f34d67204319b7aa826/66ee8282a39929_79037758trim_4cb28e9f_a639_4e96_856e_e9b3840754bb.mp4" type="video/mp4">
+                            Ваш браузер не поддерживает видео.
+                        </video>
+                    </div>
+                    <div class="video-caption">
+                        <h3>Видео по уходу за собой</h3>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <footer>
+            <nav class="bottom-nav">
+                <a href="main.html" class="nav-item">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Главная</span>
+                </a>
+                <a href="treningmain.html" class="nav-item">
+                    <i class="fa-solid fa-dumbbell"></i>
+                    <span>Тренировки</span>
+                </a>
+                <!-- Вкладка "Питание" активна, так как "Уход за собой" может быть связан с питанием или общим здоровьем, что ближе к "Питанию" чем к "Тренировкам" или "Профилю". -->
+                <a href="foodmain.html" class="nav-item active">
+                    <i class="fa-solid fa-utensils"></i>
+                    <span>Питание</span>
+                </a>
+                <a href="profile.html" class="nav-item">
+                    <i class="fa-solid fa-user"></i>
+                    <span>Профиль</span>
+                </a>
+            </nav>
+        </footer>
+    </div>
+</body>
+</html>

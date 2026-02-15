@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    
+    <title>Тренировки</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #dcdcdc; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .mobile-frame {
+            width: 100%;
+            max-width: 430px;
+            min-height: 100vh; /* Чтобы можно было скроллить при необходимости */
+            background-color: #F9F4F2;
+            position: relative;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            display: flex;
+            flex-direction: column;
+        }
+        header {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            padding-bottom: 10px;
+            flex-shrink: 0;
+        }
+        .back-button {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 22px;
+            color: #333;
+            text-decoration: none;
+        }
+        h1 {
+            font-size: 24px;
+            margin: 0;
+        }
+        main {
+            padding: 0 16px;
+            padding-bottom: 100px; /* Отступ снизу, чтобы контент не перекрывал меню */
+            flex-grow: 1;
+            overflow-y: auto;
+            -ms-overflow-style: none;  /* IE и Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+        main::-webkit-scrollbar {
+            display: none;
+        }
+        .menu-container {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 15px;
+        }
+        .menu-button {
+            background-color: #ffffff;
+            color: #000;
+            border-radius: 18px;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            padding: 20px 15px;
+            transition: transform 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        .menu-button:active {
+            transform: scale(0.97);
+            background-color: #f0f0f0;
+        }
+        .menu-button i {
+            font-size: 24px;
+            margin: 0;
+            margin-bottom: 12px;
+            color: #b4f24c;
+        }
+        /* Фиксированное нижнее меню */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            right: auto;
+            display: flex;
+            justify-content: space-around;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-top: 1px solid #E5E5EA;
+            padding-top: 10px;
+            padding-bottom: calc(20px + env(safe-area-inset-bottom));
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            height: 66px;
+            width: 100%;
+            max-width: 430px;
+            box-sizing: border-box;
+            border-radius: 18px 18px 0 0;
+            z-index: 100;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #8A8A8E;
+            text-decoration: none;
+            font-size: 10px;
+        }
+        .nav-item i {
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+        .nav-item.active {
+            color: #868b7d;
+        }
+    </style>
+</head>
+<body>
+    <div class="mobile-frame">
+        <header>
+            <!-- Кнопка для возврата в главное меню -->
+            <a href="main.html" class="back-button" aria-label="Назад">
+                <i class="fa-solid fa-chevron-left"></i>
+            </a>
+            <h1>Тренировки</h1>
+        </header>
+
+        <main>
+            <div class="menu-container">
+                <!-- 1. Разминка/заминка -->
+                <a href="razminka.html" class="menu-button">
+                    <i class="fa-solid fa-fire"></i>
+                    <span>Разминка/заминка</span>
+                </a>
+                <!-- 2. Тренировки для дома -->
+                <a href="trainingshome.html" class="menu-button">
+                    <i class="fa-solid fa-house-chimney"></i>
+                    <span>Тренировки для дома</span>
+                </a>
+                <!-- 3. Тренировки для зала -->
+                <a href="trainings-gym.html" class="menu-button">
+                    <i class="fa-solid fa-dumbbell"></i>
+                    <span>Тренировки для зала</span>
+                </a>
+                <!-- 4. МФР -->
+                <a href="mfr.html" class="menu-button">
+                    <i class="fa-solid fa-dot-circle"></i>
+                    <span>МФР</span>
+                </a>
+                <!-- 5. Мобильность тазобедренного сустава -->
+                <a href="mobility-hips.html" class="menu-button">
+                    <i class="fa-solid fa-arrows-down-to-people"></i>
+                    <span>Мобильность тазобедренного сустава</span>
+                </a>
+                <!-- 6. Упражнения для мышц тазового дна -->
+                <a href="pelvicfloor.html" class="menu-button">
+                    <i class="fa-solid fa-heart-pulse"></i>
+                    <span>Упражнения для мышц тазового дна</span>
+                </a>
+                <!-- 7. Растяжка -->
+                <a href="rastyazka.html" class="menu-button">
+                    <i class="fa-solid fa-user"></i>
+                    <span>Растяжка</span>
+                </a>
+            </div>
+        </main>
+        
+        <footer>
+            <nav class="bottom-nav" role="navigation" aria-label="Основное меню">
+                <a href="main.html" class="nav-item">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Главная</span>
+                </a>
+                <a href="treningmain.html" class="nav-item active" aria-current="page">
+                    <i class="fa-solid fa-dumbbell"></i>
+                    <span>Тренировки</span>
+                </a>
+                <a href="foodmain.html" class="nav-item">
+                    <i class="fa-solid fa-utensils"></i>
+                    <span>Питание</span>
+                </a>
+                <a href="profile.html" class="nav-item">
+                    <i class="fa-solid fa-user"></i>
+                    <span>Профиль</span>
+                </a>
+            </nav>
+        </footer>
+    </div>
+</body>
+</html>

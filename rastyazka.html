@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    
+    <title>Растяжка</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Стили для фона */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #dcdcdc; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Контейнер использует Flexbox для фиксации хедера и футера */
+        .mobile-frame {
+            width: 100%;
+            max-width: 430px;
+            height: 100vh;
+            background-color: #F9F4F2;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        /* Стили для заголовка */
+        header {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            padding-bottom: 10px;
+            flex-shrink: 0;
+        }
+
+        .back-button {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 22px;
+            color: #333;
+            text-decoration: none;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin: 0;
+        }
+
+        /* Основной контент является прокручиваемой областью */
+        main {
+            padding: 10px 16px;
+            padding-bottom: 20px;
+            flex-grow: 1;
+            overflow-y: auto;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        main::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Стили для контейнера с видео */
+        .video-container {
+            width: 100%;
+            margin-bottom: 20px;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .video-container video {
+            width: 100%;
+            display: block;
+        }
+        
+        /* Стили для текстового контента */
+        .text-content {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 18px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .text-content p {
+            margin: 0 0 1em 0; /* Добавлен отступ между параграфами */
+            line-height: 1.6;
+            font-size: 16px;
+        }
+        .text-content p:last-child {
+            margin-bottom: 0; /* Убираем отступ у последнего параграфа */
+        }
+        
+        footer {
+            flex-shrink: 0;
+        }
+
+        .bottom-nav {
+            display: flex;
+            justify-content: space-around;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-top: 1px solid #E5E5EA;
+            padding-top: 10px;
+            padding-bottom: calc(20px + env(safe-area-inset-bottom));
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #8A8A8E;
+            text-decoration: none;
+            font-size: 10px;
+        }
+
+        .nav-item i {
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+
+        .nav-item.active {
+            color: #7f817c;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="mobile-frame">
+        <header>
+            <a href="treningmain.html" class="back-button">
+                <i class="fa-solid fa-chevron-left"></i>
+            </a>
+            <h1>Растяжка</h1>
+        </header>
+
+        <main>
+            <!-- Контейнер с видеоплеером -->
+            <div class="video-container">
+                <!-- ВАЖНО: Замените эту ссылку на ссылку на ваше видео -->
+                <video src="https://file-storage.bothelp.io/myuppy/59/595b/595b30a1ec61caae65a2c292465c9f5c/trim.9CD321DE-034E-4B13-8C31-B4D4A914892B_compressed.mp4" controls playsinline></video>
+            </div>
+            
+            <!-- Контейнер с текстом -->
+            <div class="text-content">
+                <p>
+                    Тренировка с Екатериной Людвиг — тренером с 2015 года и создателем фитнес студии для девушек Bali hall.
+                </p>
+                <p>
+                    Обожает спорт и растяжку за возможность сохранить молодость своему телу, суставам и связкам, а также избавить от ряда современных проблем со спиной и всем опорно-двигательным аппаратом. А ещё растяжка отлично снимает нервное напряжение, вырабатывает гормоны — нейромедиаторы, которые улучшают настроение, приносят радость и удовлетворение.
+                </p>
+                <p>
+                    С ней вы почувствуете, что спорт — это не всегда выматывающие упражнения, от которых вся одежда мокрая. Спорт может быть спокойным, расслабляющим, приносящим силы, а не усталость.
+                </p>
+            </div>
+        </main>
+        
+        <footer>
+            <nav class="bottom-nav">
+                <a href="main.html" class="nav-item">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Главная</span>
+                </a>
+                <!-- Вкладка "Тренировки" теперь активна -->
+                <a href="treningmain.html" class="nav-item active">
+                    <i class="fa-solid fa-dumbbell"></i>
+                    <span>Тренировки</span>
+                </a>
+                <a href="foodmain.html" class="nav-item">
+                    <i class="fa-solid fa-utensils"></i>
+                    <span>Питание</span>
+                </a>
+                <a href="profile.html" class="nav-item">
+                    <i class="fa-solid fa-user"></i>
+                    <span>Профиль</span>
+                </a>
+            </nav>
+        </footer>
+    </div>
+
+</body>
+</html>

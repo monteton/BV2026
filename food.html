@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+    <title>Питание</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Стили для фона */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #dcdcdc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Контейнер использует Flexbox для фиксации хедера и футера */
+        .mobile-frame {
+            width: 100%;
+            max-width: 430px;
+            height: 100vh;
+            background-color: #F9F4F2;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Стили для заголовка */
+        header {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            padding-bottom: 10px;
+            flex-shrink: 0;
+        }
+
+        .back-button {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 22px;
+            color: #333;
+            text-decoration: none;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin: 0;
+        }
+
+        /* Основной контент является прокручиваемой областью */
+        main {
+            padding: 10px 16px;
+            flex-grow: 1;
+            overflow-y: auto;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        main::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Сетка для кнопок */
+        .calorie-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        /* Стили для кнопок */
+        .calorie-btn {
+            background-color: #ffffff;
+            color: #000;
+            border: none;
+            border-radius: 18px;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            padding: 20px 15px;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+        }
+
+        .calorie-btn:active {
+            transform: scale(0.97);
+            background-color: #f0f0f0;
+        }
+
+        /* Футер и навигация - без изменений */
+        footer {
+            flex-shrink: 0;
+        }
+
+        .bottom-nav {
+            display: flex;
+            justify-content: space-around;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-top: 1px solid #E5E5EA;
+            padding-top: 10px;
+            padding-bottom: calc(20px + env(safe-area-inset-bottom));
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #8A8A8E;
+            text-decoration: none;
+            font-size: 10px;
+        }
+
+        .nav-item i {
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+
+        .nav-item.active {
+            color: #7f817c;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="mobile-frame">
+        <header>
+            <a href="main.html" class="back-button">
+                <i class="fa-solid fa-chevron-left"></i>
+            </a>
+            <h1>Питание</h1>
+        </header>
+
+        <main>
+            <div class="calorie-grid">
+                <button class="calorie-btn" onclick="openPDF('pdfs/1300call.pdf', '1300 ккал')">1300 ккал</button>
+                <button class="calorie-btn"
+                    onclick="openPDF('pdfs/Menyu_1400-1500_kaloriy.pdf', '1400-1500 ккал')">1400-1500
+                    ккал</button>
+                <button class="calorie-btn"
+                    onclick="openPDF('pdfs/Menyu1500-1600_kaloriy.pdf', '1500-1600 ккал')">1500-1600 ккал</button>
+                <button class="calorie-btn"
+                    onclick="openPDF('pdfs/Menyu_1600-1700_kaloriy.pdf', '1600-1700 ккал')">1600-1700
+                    ккал</button>
+                <button class="calorie-btn"
+                    onclick="openPDF('pdfs/Menyu_1700-1800_kaloriy.pdf', '1700-1800 ккал')">1700-1800
+                    ккал</button>
+                <button class="calorie-btn" onclick="openPDF('pdfs/postnoe.pdf', 'Постное меню')">Постное меню</button>
+                <button class="calorie-btn" onclick="openPDF('pdfs/Pitanie_chast__1.pdf', 'Питание часть 1')">Питание
+                    часть 1</button>
+                <button class="calorie-btn" onclick="openPDF('pdfs/Pitanie_chast__2.pdf', 'Питание часть 2')">Питание
+                    часть 2</button>
+            </div>
+        </main>
+
+        <footer>
+            <nav class="bottom-nav">
+                <a href="main.html" class="nav-item">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Главная</span>
+                </a>
+                <a href="treningmain.html" class="nav-item">
+                    <i class="fa-solid fa-dumbbell"></i>
+                    <span>Тренировки</span>
+                </a>
+                <a href="foodmain.html" class="nav-item active">
+                    <i class="fa-solid fa-utensils"></i>
+                    <span>Питание</span>
+                </a>
+                <a href="profile.html" class="nav-item">
+                    <i class="fa-solid fa-user"></i>
+                    <span>Профиль</span>
+                </a>
+            </nav>
+        </footer>
+    </div>
+
+    <script>
+        function openPDF(pdfUrl, title) {
+            const params = new URLSearchParams();
+            params.set('file', pdfUrl);
+            params.set('back', 'food.html');
+            if (title) params.set('title', title);
+            window.location.href = 'view-pdf.html?' + params.toString();
+        }
+    </script>
+</body>
+
+</html>

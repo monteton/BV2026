@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Понедельник — Тренировка 7 (Неделя 3)</title>
+    <!-- ИЗМЕНЕНИЕ: Подключена библиотека иконок для нового меню -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            background: #faf9f6;
+            color: #222;
+            font-family: 'Inter', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            width: 100%; /* Исправлена опечатка */
+            max-width: 420px;
+            margin: 0 auto;
+            /* Увеличен отступ снизу, чтобы контент не перекрывался меню */
+            padding: 18px 12px 100px 12px;
+            box-sizing: border-box;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin: 0 0 16px 0;
+            font-size: 1.8em;
+        }
+        .instructions {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            padding: 18px 14px;
+            margin-bottom: 24px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .instructions h2 {
+            text-align: center;
+            color: #2c3e50;
+            margin: 0 0 10px 0;
+            font-size: 1.2em;
+            font-weight: 700;
+        }
+        .instructions p, .instructions ol { /* Изменено на ol */
+            margin: 0 0 8px 0;
+            font-size: 0.98em;
+            color: #444;
+            line-height: 1.5;
+        }
+        .instructions ol { /* Изменено на ol */
+            padding-left: 20px;
+        }
+        .instructions .note {
+            font-weight: 600;
+        }
+        .videos-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+            width: 100%;
+            margin: 0 auto 16px auto;
+        }
+        .video-item {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+        }
+        .video-preview {
+            width: 100%;
+            aspect-ratio: 9 / 16;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-radius: 16px 16px 0 0;
+            position: relative;
+        }
+        .video-preview video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            background: #000;
+            display: block;
+        }
+        .video-caption {
+            padding: 14px 10px;
+            font-size: 1em;
+            color: #222;
+            text-align: center;
+            background: #faf9f6;
+            border-radius: 0 0 16px 16px;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 500;
+        }
+
+        /* ИЗМЕНЕНИЕ: Новые стили для нижнего меню */
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            max-width: 430px; /* Ширина соответствует рамке */
+            margin: 0 auto;
+            z-index: 100;
+        }
+
+        .bottom-nav {
+            display: flex;
+            justify-content: space-around;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-top: 1px solid #E5E5EA;
+            padding-top: 10px;
+            padding-bottom: calc(20px + env(safe-area-inset-bottom));
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #8A8A8E;
+            text-decoration: none;
+            font-size: 10px;
+        }
+
+        .nav-item i {
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+
+        .nav-item.active {
+            color: #7f817c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Понедельник — Тренировка 7 (Неделя 3)</h1>
+        <div class="instructions">
+            <h2>Отдых между подходами 1–2 минуты</h2>
+            <p>Между упражнениями можно до трех минут.</p>
+            <h2>Упражнения</h2>
+            <ol>
+                <li>Ягодичный мост (тренажёр, смит, штанга) 20-15-12-8 каждый подход с увеличением веса и уменьшением количества повторений</li>
+                <li>Отведения сидя 4 подхода с отдыхом 20 сек между ними, от 20 до 10 повторений диапазон по мере утомления</li>
+                <li>Приседания в тренажере 12 раз 3 подхода</li>
+                <li>Гиперэкстензия 15/3 подхода</li>
+                <li>Жим ногами 12–15 раз 3 подхода</li>
+                <li>Диагональные скручивания по 10 на каждую сторону / 3 подхода</li>
+            </ol>
+        </div>
+        <div class="videos-grid">
+            <div class="video-item">
+                <div class="video-preview">
+                    <video controls controlsList="nodownload" preload="metadata">
+                        <source src="https://storage2.bothelp.io/myuppy/3d/3da0/3da00061af60fe9c0dbaeca11792d5cd/1YAgodichnyiy_mostik.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="video-caption">Ягодичный мост</div>
+            </div>
+            <!-- ... остальные блоки .video-item ... -->
+            <div class="video-item">
+                <div class="video-preview">
+                    <video controls controlsList="nodownload" preload="metadata">
+                        <source src="https://storage2.bothelp.io/myuppy/c8/c83a/c83ad5b0efbad5e5f7ef03b90e71f093/2_otvedenie_nog_sidya.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="video-caption">Отведения ног сидя</div>
+            </div>
+            <div class="video-item">
+                <div class="video-preview">
+                    <video controls controlsList="nodownload" preload="metadata">
+                        <source src="https://storage2.bothelp.io/myuppy/b4/b4c5/b4c5933c9edb64aa84cfa9699b16cce9/3_prisedaniya_na_trenajore.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="video-caption">Приседания на тренажере</div>
+            </div>
+            <div class="video-item">
+                <div class="video-preview">
+                    <video controls controlsList="nodownload" preload="metadata">
+                        <source src="https://storage2.bothelp.io/myuppy/ac/ac23/ac23013303014fccc2dbf9673430f324/4_Giperekstenziya.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="video-caption">Гиперэкстензия</div>
+            </div>
+            <div class="video-item">
+                <div class="video-preview">
+                    <video controls controlsList="nodownload" preload="metadata">
+                        <source src="https://storage2.bothelp.io/myuppy/a1/a1ad/a1ad4afb6a07c56be08c21ca8218032b/5_jim_nogami.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="video-caption">Жим ногами</div>
+            </div>
+            <div class="video-item">
+                <div class="video-preview">
+                    <video controls controlsList="nodownload" preload="metadata">
+                        <source src="https://storage2.bothelp.io/myuppy/e2/e247/e2477f3330cb6144f386ef1111fdfa87/6_Diagonal_nyie_skruchivaniya.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="video-caption">Диагональные скручивания</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ИЗМЕНЕНИЕ: Новый блок навигации -->
+    <footer>
+        <nav class="bottom-nav">
+            <a href="main.html" class="nav-item">
+                <i class="fa-solid fa-house"></i>
+                <span>Главная</span>
+            </a>
+            <!-- Вкладка "Тренировки" активна -->
+            <a href="treningmain.html" class="nav-item active">
+                <i class="fa-solid fa-dumbbell"></i>
+                <span>Тренировки</span>
+            </a>
+            <a href="foodmain.html" class="nav-item">
+                <i class="fa-solid fa-utensils"></i>
+                <span>Питание</span>
+            </a>
+            <a href="profile.html" class="nav-item">
+                <i class="fa-solid fa-user"></i>
+                <span>Профиль</span>
+            </a>
+        </nav>
+    </footer>
+</body>
+</html>
