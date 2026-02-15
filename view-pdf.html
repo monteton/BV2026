@@ -8,345 +8,38 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <title>Просмотр PDF</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
         }
 
         html,
         body {
             width: 100%;
             height: 100%;
-            overflow: hidden;
-            background-color: #1a1a1a;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-        }
-
-        /* ===== HEADER ===== */
-        .pdf-header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 12px 16px;
-            padding-top: calc(12px + env(safe-area-inset-top));
-            background: rgba(26, 26, 26, 0.92);
-            -webkit-backdrop-filter: blur(12px);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .header-btn {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: none;
-            border: none;
-            color: #fff;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            padding: 8px 12px;
-            border-radius: 10px;
-            transition: background 0.2s;
-            text-decoration: none;
-        }
-
-        .header-btn:active {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .header-btn i {
-            font-size: 18px;
-        }
-
-        .header-title {
-            color: rgba(255, 255, 255, 0.85);
-            font-size: 14px;
-            font-weight: 500;
-            max-width: 200px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .header-right {
-            display: flex;
-            gap: 4px;
-        }
-
-        /* ===== PDF CONTAINER ===== */
-        .pdf-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            padding-top: calc(56px + env(safe-area-inset-top));
-        }
-
-        .pdf-container iframe,
-        .pdf-container object,
-        .pdf-container embed {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        /* ===== LOADING ===== */
-        .loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
             background: #1a1a1a;
-            z-index: 200;
-            transition: opacity 0.4s ease;
-        }
-
-        .loading-overlay.fade-out {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .loading-spinner {
-            width: 40px;
-            height: 40px;
-            border: 3px solid rgba(255, 255, 255, 0.15);
-            border-top-color: #fff;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        .loading-text {
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 14px;
-            margin-top: 16px;
-        }
-
-        .loading-error {
-            color: #ff6b6b;
-            font-size: 14px;
-            margin-top: 16px;
-            text-align: center;
-            padding: 0 32px;
-        }
-
-        /* ===== FALLBACK LINK ===== */
-        .fallback-container {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            gap: 20px;
-            padding: 32px;
-            text-align: center;
-        }
-
-        .fallback-container.show {
-            display: flex;
-        }
-
-        .fallback-icon {
-            font-size: 48px;
-            color: rgba(255, 255, 255, 0.3);
-        }
-
-        .fallback-text {
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 15px;
-            line-height: 1.5;
-        }
-
-        .fallback-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 14px 28px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: #fff;
-            border: none;
-            border-radius: 14px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            text-decoration: none;
-            transition: transform 0.15s, box-shadow 0.2s;
-        }
-
-        .fallback-btn:active {
-            transform: scale(0.96);
         }
     </style>
+    <script>
+        // Просто перенаправляем на PDF — браузер откроет его нативным просмотрщиком
+        const params = new URLSearchParams(window.location.search);
+        const file = params.get('file');
+        if (file) {
+            window.location.replace(file);
+        } else if (window.location.hash) {
+            window.location.replace(decodeURIComponent(window.location.hash.substring(1)));
+        } else {
+            document.title = 'Ошибка';
+            document.addEventListener('DOMContentLoaded', () => {
+                document.body.style.cssText = 'display:flex;align-items:center;justify-content:center;color:#fff;font-family:sans-serif;';
+                document.body.textContent = 'Файл не указан';
+            });
+        }
+    </script>
 </head>
 
-<body>
-    <!-- Loading overlay -->
-    <div class="loading-overlay" id="loadingOverlay">
-        <div class="loading-spinner"></div>
-        <div class="loading-text" id="loadingText">Загрузка документа...</div>
-    </div>
-
-    <!-- Header -->
-    <div class="pdf-header" id="pdfHeader">
-        <a class="header-btn" id="backBtn" href="javascript:history.back()">
-            <i class="fa-solid fa-chevron-left"></i>
-            <span>Назад</span>
-        </a>
-        <span class="header-title" id="headerTitle"></span>
-        <div class="header-right">
-            <a class="header-btn" id="downloadBtn" href="#" target="_blank" title="Открыть в новой вкладке">
-                <i class="fa-solid fa-arrow-up-right-from-square"></i>
-            </a>
-        </div>
-    </div>
-
-    <!-- PDF container -->
-    <div class="pdf-container" id="pdfContainer"></div>
-
-    <script>
-        // ===== Get params =====
-        const params = new URLSearchParams(window.location.search);
-        const pdfFile = params.get('file');
-        const backUrl = params.get('back');
-        const title = params.get('title');
-
-        const loadingOverlay = document.getElementById('loadingOverlay');
-        const loadingText = document.getElementById('loadingText');
-        const pdfContainer = document.getElementById('pdfContainer');
-        const backBtn = document.getElementById('backBtn');
-        const downloadBtn = document.getElementById('downloadBtn');
-        const headerTitle = document.getElementById('headerTitle');
-
-        // ===== Set back button =====
-        if (backUrl) {
-            backBtn.href = backUrl;
-        }
-
-        // ===== Set title =====
-        if (title) {
-            document.title = title;
-            headerTitle.textContent = title;
-        }
-
-        // ===== Check if file specified =====
-        if (!pdfFile) {
-            showError('Файл не указан');
-        } else {
-            // Set download/open link
-            downloadBtn.href = pdfFile;
-
-            // Detect platform
-            const ua = navigator.userAgent || '';
-            const isMobile = /Android|iPhone|iPad|iPod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-            const isIOS = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-
-            if (isIOS) {
-                // iOS: iframe with direct PDF (Safari renders PDFs natively in iframes)
-                showPdfIframe(pdfFile);
-            } else if (isMobile) {
-                // Android: Google Docs Viewer (most reliable for Android)
-                const fullUrl = new URL(pdfFile, window.location.href).href;
-                const gdocsUrl = 'https://docs.google.com/gview?embedded=true&url=' + encodeURIComponent(fullUrl);
-                showPdfIframe(gdocsUrl);
-            } else {
-                // Desktop: native embed (Chrome, Firefox, Edge all have built-in PDF viewers)
-                showPdfEmbed(pdfFile);
-            }
-        }
-
-        function showPdfIframe(url) {
-            const iframe = document.createElement('iframe');
-            iframe.src = url;
-            iframe.setAttribute('allowfullscreen', '');
-            iframe.setAttribute('loading', 'lazy');
-
-            iframe.onload = () => {
-                fadeOutLoading();
-            };
-
-            // Fallback timeout (if onload doesn't fire)
-            setTimeout(() => {
-                fadeOutLoading();
-            }, 5000);
-
-            pdfContainer.appendChild(iframe);
-        }
-
-        function showPdfEmbed(url) {
-            // Use object tag with embed fallback
-            const obj = document.createElement('object');
-            obj.data = url;
-            obj.type = 'application/pdf';
-
-            // Fallback content inside <object>
-            const fallback = document.createElement('div');
-            fallback.className = 'fallback-container show';
-            fallback.innerHTML = `
-                <i class="fa-solid fa-file-pdf fallback-icon"></i>
-                <div class="fallback-text">
-                    PDF не удалось отобразить.<br>
-                    Откройте файл напрямую.
-                </div>
-                <a class="fallback-btn" href="${url}" target="_blank">
-                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                    Открыть PDF
-                </a>
-            `;
-            obj.appendChild(fallback);
-
-            pdfContainer.appendChild(obj);
-
-            // Fade out loading after short delay
-            setTimeout(() => {
-                fadeOutLoading();
-            }, 1500);
-        }
-
-        function fadeOutLoading() {
-            if (loadingOverlay.classList.contains('fade-out')) return;
-            loadingOverlay.classList.add('fade-out');
-            setTimeout(() => {
-                loadingOverlay.style.display = 'none';
-            }, 400);
-        }
-
-        function showError(msg) {
-            loadingText.style.display = 'none';
-            const spinner = loadingOverlay.querySelector('.loading-spinner');
-            if (spinner) spinner.style.display = 'none';
-
-            const errEl = document.createElement('div');
-            errEl.className = 'loading-error';
-            errEl.textContent = msg;
-            loadingOverlay.appendChild(errEl);
-        }
-
-        // ===== Keyboard shortcut =====
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') history.back();
-        });
-    </script>
-</body>
+<body></body>
 
 </html>
