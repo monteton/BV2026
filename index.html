@@ -350,9 +350,9 @@
             // Браузер поддерживает установку? (только Chrome на Android/Desktop и Safari на iOS)
             const isSupportedBrowser = (isChrome && !isIOS) || (isSafari && isIOS);
 
-            // === Если приложение уже установлено — не показываем ===
-            const pwaState = JSON.parse(localStorage.getItem('pwa-banner-state') || '{}');
-            if (pwaState.installed) return;
+            // localStorage не используем — полагаемся только на реальные проверки:
+            // 1. display-mode: standalone (строка 326) = приложение запущено
+            // 2. beforeinstallprompt = Chrome говорит "можно установить" = НЕ установлено
 
             let deferredPrompt = null;
             let bannerShown = false;
@@ -456,7 +456,6 @@
                             const { outcome } = await deferredPrompt.userChoice;
                             if (outcome === 'accepted') {
                                 banner.classList.remove('show');
-                                localStorage.setItem('pwa-banner-state', JSON.stringify({ dismissed: Date.now(), installed: true }));
                             }
                             deferredPrompt = null;
                         }
