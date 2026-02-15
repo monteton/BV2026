@@ -120,23 +120,11 @@
             // Кнопка «открыть отдельно»
             document.getElementById('openBtn').href = file;
 
-            // Определяем платформу
-            const ua = navigator.userAgent || '';
-            const isAndroid = /Android/i.test(ua);
-
-            // Создаём iframe
+            // Простой iframe — браузер сам отобразит PDF
             const iframe = document.createElement('iframe');
             iframe.className = 'pdf-frame';
             iframe.setAttribute('allowfullscreen', '');
-
-            if (isAndroid) {
-                // Android: Google Docs Viewer (встроенный зум, скролл)
-                const fullUrl = new URL(file, window.location.href).href;
-                iframe.src = 'https://docs.google.com/gview?embedded=true&url=' + encodeURIComponent(fullUrl);
-            } else {
-                // iOS / Desktop: нативный просмотрщик браузера
-                iframe.src = file;
-            }
+            iframe.src = file;
 
             document.body.appendChild(iframe);
         } else {
